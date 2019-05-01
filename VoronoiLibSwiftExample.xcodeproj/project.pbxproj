@@ -16,6 +16,7 @@
 		FF28E4D0226C8BF0008D6640 /* VoronoiLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; };
 		FF28E4D1226C8BF0008D6640 /* VoronoiLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF28E4D5226C8FB7008D6640 /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF28E4D4226C8FB7008D6640 /* RenderView.swift */; };
+		FFCD74BD2279E88A00061146 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74BC2279E88A00061146 /* StopWatch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,13 @@
 			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
 			remoteInfo = VoronoiLib;
 		};
+		FFCD74C02279E88B00061146 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF5B14D02275E1C0006C0F4D;
+			remoteInfo = VoronoiLibTestHost;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +91,7 @@
 		FF1CA0E3226C8723002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VoronoiLibSwift.xcodeproj; path = ../VoronoiLibSwift/VoronoiLibSwift.xcodeproj; sourceTree = "<group>"; };
 		FF28E4D4226C8FB7008D6640 /* RenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
+		FFCD74BC2279E88A00061146 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +138,7 @@
 				FF1CA0CC226C8721002089F3 /* AppDelegate.swift */,
 				FF1CA0CE226C8721002089F3 /* ViewController.swift */,
 				FF28E4D4226C8FB7008D6640 /* RenderView.swift */,
+				FFCD74BC2279E88A00061146 /* StopWatch.swift */,
 				FF1CA0D0226C8721002089F3 /* Main.storyboard */,
 				FF1CA0D3226C8723002089F3 /* Assets.xcassets */,
 				FF1CA0D5226C8723002089F3 /* LaunchScreen.storyboard */,
@@ -151,6 +161,7 @@
 			children = (
 				FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */,
 				FF1CA0F4226C87AC002089F3 /* VoronoiLibTests.xctest */,
+				FFCD74C12279E88B00061146 /* VoronoiLibTestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,6 +266,13 @@
 			remoteRef = FF28E4CE226C8BEA008D6640 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		FFCD74C12279E88B00061146 /* VoronoiLibTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = VoronoiLibTestHost.app;
+			remoteRef = FFCD74C02279E88B00061146 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -285,6 +303,7 @@
 				FF1CA0CF226C8721002089F3 /* ViewController.swift in Sources */,
 				FF1CA0CD226C8721002089F3 /* AppDelegate.swift in Sources */,
 				FF28E4D5226C8FB7008D6640 /* RenderView.swift in Sources */,
+				FFCD74BD2279E88A00061146 /* StopWatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

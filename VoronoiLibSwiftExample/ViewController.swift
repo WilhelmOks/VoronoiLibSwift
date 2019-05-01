@@ -10,6 +10,7 @@ import UIKit
 import VoronoiLib
 
 class ViewController: UIViewController {
+    let fortunesAlgorithmStopWatch = StopWatch(name: "FortunesAlgorithm")
     
     var renderView: RenderView {
         return view as! RenderView
@@ -22,6 +23,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor(hue: 0.35, saturation: 0.05, brightness: 0.99, alpha: 1)
         
         makeNewVoronoi(ofSize: renderAreaSize)
         
@@ -53,9 +56,17 @@ class ViewController: UIViewController {
             sites.append(FortuneSite(x: point.x, y: point.y))
         }
         
-        let edges = FortunesAlgorithm.run(sites: sites, minX: 0, minY: 0, maxX: Double(size.width), maxY: Double(size.height))
+        let maxX = Double(size.width)
+        let maxY = Double(size.height)
         
-        renderView.edges = edges.map { (start: $0.start.cgpoint, end: $0.end.cgpoint) }
+        fortunesAlgorithmStopWatch.run({ () -> [Edge] in
+            let edges = FortunesAlgorithm.run(sites: sites, minX: 0, minY: 0, maxX: maxX, maxY: maxY)
+            return edges
+        }) { (result, runTime) in
+            fortunesAlgorithmStopWatch.printRunTime(runTime)
+            fortunesAlgorithmStopWatch.printAverageRunTime()
+            renderView.edges = result.map { (start: $0.start.cgpoint, end: $0.end.cgpoint) }
+        }
     }
     
     private func randomPointInArea(withSize size: CGSize) -> SIMD2<Double> {
