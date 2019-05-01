@@ -3,6 +3,8 @@ Swift implementation of Fortunes Algorithm.
 
 This is a port of [Zalgo2462/VoronoiLib](https://github.com/Zalgo2462/VoronoiLib) from C# to Swift.
 
+![screenshot](Simulator_Screen_Shot.png)
+
 ## Version 0.1
 In the current version 0.1 the swift library is essentially the same code as the original C# library.
 The code has been ported by hand. Some minor changes needed to be made in order to work in Swift.
