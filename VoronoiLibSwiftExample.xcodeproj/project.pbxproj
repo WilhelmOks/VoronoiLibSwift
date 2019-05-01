@@ -13,10 +13,10 @@
 		FF1CA0D4226C8723002089F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF1CA0D3226C8723002089F3 /* Assets.xcassets */; };
 		FF1CA0D7226C8723002089F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1CA0D5226C8723002089F3 /* LaunchScreen.storyboard */; };
 		FF1CA0E2226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0E1226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift */; };
-		FF28E4D0226C8BF0008D6640 /* VoronoiLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; };
-		FF28E4D1226C8BF0008D6640 /* VoronoiLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF28E4D5226C8FB7008D6640 /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF28E4D4226C8FB7008D6640 /* RenderView.swift */; };
 		FFCD74BD2279E88A00061146 /* StopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74BC2279E88A00061146 /* StopWatch.swift */; };
+		FFCD74CE227A1EFD00061146 /* VoronoiLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCD74C9227A1EB400061146 /* VoronoiLib.framework */; };
+		FFCD74CF227A1EFD00061146 /* VoronoiLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCD74C9227A1EB400061146 /* VoronoiLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,40 +27,33 @@
 			remoteGlobalIDString = FF1CA0C8226C8721002089F3;
 			remoteInfo = VoronoiLibSwiftExample;
 		};
-		FF1CA0F3226C87AC002089F3 /* PBXContainerItemProxy */ = {
+		FFCD74C8227A1EB400061146 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF1CA096226A39FD002089F3;
-			remoteInfo = VoronoiLibSwiftTests;
-		};
-		FF1CA133226C8B16002089F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
-			remoteInfo = VoronoiLibSwift;
-		};
-		FF28E4CE226C8BEA008D6640 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			containerPortal = FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF1CA11C226C8A79002089F3;
 			remoteInfo = VoronoiLib;
 		};
-		FF28E4D2226C8BF0008D6640 /* PBXContainerItemProxy */ = {
+		FFCD74CA227A1EB400061146 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
-			remoteInfo = VoronoiLib;
+			containerPortal = FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF1CA096226A39FD002089F3;
+			remoteInfo = VoronoiLibTests;
 		};
-		FFCD74C02279E88B00061146 /* PBXContainerItemProxy */ = {
+		FFCD74CC227A1EB400061146 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			containerPortal = FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF5B14D02275E1C0006C0F4D;
 			remoteInfo = VoronoiLibTestHost;
+		};
+		FFCD74D0227A1EFD00061146 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
+			remoteInfo = VoronoiLib;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -71,7 +64,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FF28E4D1226C8BF0008D6640 /* VoronoiLib.framework in Embed Frameworks */,
+				FFCD74CF227A1EFD00061146 /* VoronoiLib.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,9 +82,9 @@
 		FF1CA0DD226C8723002089F3 /* VoronoiLibSwiftExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoronoiLibSwiftExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1CA0E1226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoronoiLibSwiftExampleTests.swift; sourceTree = "<group>"; };
 		FF1CA0E3226C8723002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VoronoiLibSwift.xcodeproj; path = ../VoronoiLibSwift/VoronoiLibSwift.xcodeproj; sourceTree = "<group>"; };
 		FF28E4D4226C8FB7008D6640 /* RenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
 		FFCD74BC2279E88A00061146 /* StopWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatch.swift; sourceTree = "<group>"; };
+		FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VoronoiLibSwift.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF28E4D0226C8BF0008D6640 /* VoronoiLib.framework in Frameworks */,
+				FFCD74CE227A1EFD00061146 /* VoronoiLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +109,7 @@
 		FF1CA0C0226C8721002089F3 = {
 			isa = PBXGroup;
 			children = (
-				FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */,
+				FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */,
 				FF1CA0CB226C8721002089F3 /* VoronoiLibSwiftExample */,
 				FF1CA0E0226C8723002089F3 /* VoronoiLibSwiftExampleTests */,
 				FF1CA0CA226C8721002089F3 /* Products */,
@@ -156,12 +149,12 @@
 			path = VoronoiLibSwiftExampleTests;
 			sourceTree = "<group>";
 		};
-		FF1CA0ED226C87AC002089F3 /* Products */ = {
+		FFCD74C3227A1EB400061146 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */,
-				FF1CA0F4226C87AC002089F3 /* VoronoiLibTests.xctest */,
-				FFCD74C12279E88B00061146 /* VoronoiLibTestHost.app */,
+				FFCD74C9227A1EB400061146 /* VoronoiLib.framework */,
+				FFCD74CB227A1EB400061146 /* VoronoiLibTests.xctest */,
+				FFCD74CD227A1EB400061146 /* VoronoiLibTestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,8 +174,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				FF1CA134226C8B16002089F3 /* PBXTargetDependency */,
-				FF28E4D3226C8BF0008D6640 /* PBXTargetDependency */,
+				FFCD74D1227A1EFD00061146 /* PBXTargetDependency */,
 			);
 			name = VoronoiLibSwiftExample;
 			productName = VoronoiLibSwiftExample;
@@ -239,8 +231,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FF1CA0ED226C87AC002089F3 /* Products */;
-					ProjectRef = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+					ProductGroup = FFCD74C3227A1EB400061146 /* Products */;
+					ProjectRef = FFCD74C2227A1EB400061146 /* VoronoiLibSwift.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -252,25 +244,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FF1CA0F4226C87AC002089F3 /* VoronoiLibTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = VoronoiLibTests.xctest;
-			remoteRef = FF1CA0F3226C87AC002089F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */ = {
+		FFCD74C9227A1EB400061146 /* VoronoiLib.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = VoronoiLib.framework;
-			remoteRef = FF28E4CE226C8BEA008D6640 /* PBXContainerItemProxy */;
+			remoteRef = FFCD74C8227A1EB400061146 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FFCD74C12279E88B00061146 /* VoronoiLibTestHost.app */ = {
+		FFCD74CB227A1EB400061146 /* VoronoiLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = VoronoiLibTests.xctest;
+			remoteRef = FFCD74CA227A1EB400061146 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FFCD74CD227A1EB400061146 /* VoronoiLibTestHost.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = VoronoiLibTestHost.app;
-			remoteRef = FFCD74C02279E88B00061146 /* PBXContainerItemProxy */;
+			remoteRef = FFCD74CC227A1EB400061146 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -323,15 +315,10 @@
 			target = FF1CA0C8226C8721002089F3 /* VoronoiLibSwiftExample */;
 			targetProxy = FF1CA0DE226C8723002089F3 /* PBXContainerItemProxy */;
 		};
-		FF1CA134226C8B16002089F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VoronoiLibSwift;
-			targetProxy = FF1CA133226C8B16002089F3 /* PBXContainerItemProxy */;
-		};
-		FF28E4D3226C8BF0008D6640 /* PBXTargetDependency */ = {
+		FFCD74D1227A1EFD00061146 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VoronoiLib;
-			targetProxy = FF28E4D2226C8BF0008D6640 /* PBXContainerItemProxy */;
+			targetProxy = FFCD74D0227A1EFD00061146 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
