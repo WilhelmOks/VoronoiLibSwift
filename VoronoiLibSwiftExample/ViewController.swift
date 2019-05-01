@@ -47,8 +47,8 @@ class ViewController: UIViewController {
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
-    private func makeNewVoronoi(ofSize size: CGSize) {
-        let numberOfSites = 200
+    private func makeSites(forViewSize size: CGSize) -> [FortuneSite] {
+        let numberOfSites = 50
         var sites: [FortuneSite] = []
         
         for _ in 0..<numberOfSites {
@@ -56,10 +56,16 @@ class ViewController: UIViewController {
             sites.append(FortuneSite(x: point.x, y: point.y))
         }
         
-        let maxX = Double(size.width)
-        let maxY = Double(size.height)
+        return sites
+    }
+    
+    private func makeNewVoronoi(ofSize size: CGSize) {
+        let sites = makeSites(forViewSize: size)
+        renderView.sites = sites
         
         fortunesAlgorithmStopWatch.run({ () -> [Edge] in
+            let maxX = Double(size.width)
+            let maxY = Double(size.height)
             let edges = FortunesAlgorithm.run(sites: sites, minX: 0, minY: 0, maxX: maxX, maxY: maxY)
             return edges
         }) { (result, runTime) in

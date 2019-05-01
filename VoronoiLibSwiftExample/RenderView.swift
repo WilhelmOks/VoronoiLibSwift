@@ -8,8 +8,21 @@
 
 import Foundation
 import UIKit
+import VoronoiLib //TODO: delete
 
 class RenderView : UIView {
+    var sites: [FortuneSite] = [] {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    var siteColor: UIColor = .red {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     var edges: [(start: CGPoint, end: CGPoint)] = [] {
         didSet {
             setNeedsDisplay()
@@ -25,29 +38,25 @@ class RenderView : UIView {
     override func draw(_ rect: CGRect) {
         guard !edges.isEmpty else { return }
         
+        siteColor.setFill()
+        
+        for site in sites {
+            let path = UIBezierPath()
+            
+            path.addArc(withCenter: CGPoint(x: site.x, y: site.y), radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
+            
+            path.fill()
+        }
+        
+        edgeColor.set()
+        
         for edge in edges {
             let path = UIBezierPath()
             
-            var start = edge.start
-            var end = edge.end
+            path.move(to: edge.start)
+            path.addLine(to: edge.end)
             
-            let scale: CGPoint = .init(x: 1, y: 1)
-            
-            start.x *= scale.x
-            start.y *= scale.y
-            
-            end.x *= scale.x
-            end.y *= scale.y
-            
-            path.move(to: start)
-            path.addLine(to: end)
-            
-            //path.close()
-            
-            edgeColor.set()
             path.stroke()
-            //path.fill()
-            
         }
     }
 }

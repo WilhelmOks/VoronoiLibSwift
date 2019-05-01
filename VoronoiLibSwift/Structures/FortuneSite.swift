@@ -8,10 +8,10 @@
 
 //TODO: should be in the public folder
 public final class FortuneSite {
-    let x: Double
-    let y: Double
+    public let x: Double
+    public let y: Double
     
-    var cell: [VEdge] = []
+    //var cell: [VEdge] = []
     
     var neighbors: [FortuneSite] = []
     
