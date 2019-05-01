@@ -1,0 +1,568 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF1CA0CD226C8721002089F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0CC226C8721002089F3 /* AppDelegate.swift */; };
+		FF1CA0CF226C8721002089F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0CE226C8721002089F3 /* ViewController.swift */; };
+		FF1CA0D2226C8721002089F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1CA0D0226C8721002089F3 /* Main.storyboard */; };
+		FF1CA0D4226C8723002089F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF1CA0D3226C8723002089F3 /* Assets.xcassets */; };
+		FF1CA0D7226C8723002089F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1CA0D5226C8723002089F3 /* LaunchScreen.storyboard */; };
+		FF1CA0E2226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0E1226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift */; };
+		FF28E4D0226C8BF0008D6640 /* VoronoiLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; };
+		FF28E4D1226C8BF0008D6640 /* VoronoiLib.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF28E4D5226C8FB7008D6640 /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF28E4D4226C8FB7008D6640 /* RenderView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF1CA0DE226C8723002089F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0C1226C8721002089F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1CA0C8226C8721002089F3;
+			remoteInfo = VoronoiLibSwiftExample;
+		};
+		FF1CA0F3226C87AC002089F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF1CA096226A39FD002089F3;
+			remoteInfo = VoronoiLibSwiftTests;
+		};
+		FF1CA133226C8B16002089F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
+			remoteInfo = VoronoiLibSwift;
+		};
+		FF28E4CE226C8BEA008D6640 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF1CA11C226C8A79002089F3;
+			remoteInfo = VoronoiLib;
+		};
+		FF28E4D2226C8BF0008D6640 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FF1CA11B226C8A79002089F3;
+			remoteInfo = VoronoiLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FF1CA135226C8B16002089F3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FF28E4D1226C8BF0008D6640 /* VoronoiLib.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FF1CA0C9226C8721002089F3 /* VoronoiLibSwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoronoiLibSwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1CA0CC226C8721002089F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FF1CA0CE226C8721002089F3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FF1CA0D1226C8721002089F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF1CA0D3226C8723002089F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF1CA0D6226C8723002089F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FF1CA0D8226C8723002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF1CA0DD226C8723002089F3 /* VoronoiLibSwiftExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoronoiLibSwiftExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1CA0E1226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoronoiLibSwiftExampleTests.swift; sourceTree = "<group>"; };
+		FF1CA0E3226C8723002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VoronoiLibSwift.xcodeproj; path = ../VoronoiLibSwift/VoronoiLibSwift.xcodeproj; sourceTree = "<group>"; };
+		FF28E4D4226C8FB7008D6640 /* RenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF1CA0C6226C8721002089F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF28E4D0226C8BF0008D6640 /* VoronoiLib.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1CA0DA226C8723002089F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF1CA0C0226C8721002089F3 = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */,
+				FF1CA0CB226C8721002089F3 /* VoronoiLibSwiftExample */,
+				FF1CA0E0226C8723002089F3 /* VoronoiLibSwiftExampleTests */,
+				FF1CA0CA226C8721002089F3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF1CA0CA226C8721002089F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0C9226C8721002089F3 /* VoronoiLibSwiftExample.app */,
+				FF1CA0DD226C8723002089F3 /* VoronoiLibSwiftExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF1CA0CB226C8721002089F3 /* VoronoiLibSwiftExample */ = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0CC226C8721002089F3 /* AppDelegate.swift */,
+				FF1CA0CE226C8721002089F3 /* ViewController.swift */,
+				FF28E4D4226C8FB7008D6640 /* RenderView.swift */,
+				FF1CA0D0226C8721002089F3 /* Main.storyboard */,
+				FF1CA0D3226C8723002089F3 /* Assets.xcassets */,
+				FF1CA0D5226C8723002089F3 /* LaunchScreen.storyboard */,
+				FF1CA0D8226C8723002089F3 /* Info.plist */,
+			);
+			path = VoronoiLibSwiftExample;
+			sourceTree = "<group>";
+		};
+		FF1CA0E0226C8723002089F3 /* VoronoiLibSwiftExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0E1226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift */,
+				FF1CA0E3226C8723002089F3 /* Info.plist */,
+			);
+			path = VoronoiLibSwiftExampleTests;
+			sourceTree = "<group>";
+		};
+		FF1CA0ED226C87AC002089F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */,
+				FF1CA0F4226C87AC002089F3 /* VoronoiLibTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF1CA0C8226C8721002089F3 /* VoronoiLibSwiftExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF1CA0E6226C8723002089F3 /* Build configuration list for PBXNativeTarget "VoronoiLibSwiftExample" */;
+			buildPhases = (
+				FF1CA0C5226C8721002089F3 /* Sources */,
+				FF1CA0C6226C8721002089F3 /* Frameworks */,
+				FF1CA0C7226C8721002089F3 /* Resources */,
+				FF1CA135226C8B16002089F3 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF1CA134226C8B16002089F3 /* PBXTargetDependency */,
+				FF28E4D3226C8BF0008D6640 /* PBXTargetDependency */,
+			);
+			name = VoronoiLibSwiftExample;
+			productName = VoronoiLibSwiftExample;
+			productReference = FF1CA0C9226C8721002089F3 /* VoronoiLibSwiftExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF1CA0DC226C8723002089F3 /* VoronoiLibSwiftExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF1CA0E9226C8723002089F3 /* Build configuration list for PBXNativeTarget "VoronoiLibSwiftExampleTests" */;
+			buildPhases = (
+				FF1CA0D9226C8723002089F3 /* Sources */,
+				FF1CA0DA226C8723002089F3 /* Frameworks */,
+				FF1CA0DB226C8723002089F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF1CA0DF226C8723002089F3 /* PBXTargetDependency */,
+			);
+			name = VoronoiLibSwiftExampleTests;
+			productName = VoronoiLibSwiftExampleTests;
+			productReference = FF1CA0DD226C8723002089F3 /* VoronoiLibSwiftExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF1CA0C1226C8721002089F3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Wilhelm Oks";
+				TargetAttributes = {
+					FF1CA0C8226C8721002089F3 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					FF1CA0DC226C8723002089F3 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = FF1CA0C8226C8721002089F3;
+					};
+				};
+			};
+			buildConfigurationList = FF1CA0C4226C8721002089F3 /* Build configuration list for PBXProject "VoronoiLibSwiftExample" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF1CA0C0226C8721002089F3;
+			productRefGroup = FF1CA0CA226C8721002089F3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FF1CA0ED226C87AC002089F3 /* Products */;
+					ProjectRef = FF1CA0EC226C87AC002089F3 /* VoronoiLibSwift.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				FF1CA0C8226C8721002089F3 /* VoronoiLibSwiftExample */,
+				FF1CA0DC226C8723002089F3 /* VoronoiLibSwiftExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FF1CA0F4226C87AC002089F3 /* VoronoiLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = VoronoiLibTests.xctest;
+			remoteRef = FF1CA0F3226C87AC002089F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FF28E4CF226C8BEA008D6640 /* VoronoiLib.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VoronoiLib.framework;
+			remoteRef = FF28E4CE226C8BEA008D6640 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF1CA0C7226C8721002089F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF1CA0D7226C8723002089F3 /* LaunchScreen.storyboard in Resources */,
+				FF1CA0D4226C8723002089F3 /* Assets.xcassets in Resources */,
+				FF1CA0D2226C8721002089F3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1CA0DB226C8723002089F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF1CA0C5226C8721002089F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF1CA0CF226C8721002089F3 /* ViewController.swift in Sources */,
+				FF1CA0CD226C8721002089F3 /* AppDelegate.swift in Sources */,
+				FF28E4D5226C8FB7008D6640 /* RenderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF1CA0D9226C8723002089F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF1CA0E2226C8723002089F3 /* VoronoiLibSwiftExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF1CA0DF226C8723002089F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF1CA0C8226C8721002089F3 /* VoronoiLibSwiftExample */;
+			targetProxy = FF1CA0DE226C8723002089F3 /* PBXContainerItemProxy */;
+		};
+		FF1CA134226C8B16002089F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VoronoiLibSwift;
+			targetProxy = FF1CA133226C8B16002089F3 /* PBXContainerItemProxy */;
+		};
+		FF28E4D3226C8BF0008D6640 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VoronoiLib;
+			targetProxy = FF28E4D2226C8BF0008D6640 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF1CA0D0226C8721002089F3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF1CA0D1226C8721002089F3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FF1CA0D5226C8723002089F3 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF1CA0D6226C8723002089F3 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF1CA0E4226C8723002089F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF1CA0E5226C8723002089F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF1CA0E7226C8723002089F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 63AP2U65JZ;
+				INFOPLIST_FILE = VoronoiLibSwiftExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wok.VoronoiLibSwiftExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF1CA0E8226C8723002089F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 63AP2U65JZ;
+				INFOPLIST_FILE = VoronoiLibSwiftExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wok.VoronoiLibSwiftExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FF1CA0EA226C8723002089F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 63AP2U65JZ;
+				INFOPLIST_FILE = VoronoiLibSwiftExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wok.VoronoiLibSwiftExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoronoiLibSwiftExample.app/VoronoiLibSwiftExample";
+			};
+			name = Debug;
+		};
+		FF1CA0EB226C8723002089F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 63AP2U65JZ;
+				INFOPLIST_FILE = VoronoiLibSwiftExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = wok.VoronoiLibSwiftExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoronoiLibSwiftExample.app/VoronoiLibSwiftExample";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF1CA0C4226C8721002089F3 /* Build configuration list for PBXProject "VoronoiLibSwiftExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1CA0E4226C8723002089F3 /* Debug */,
+				FF1CA0E5226C8723002089F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF1CA0E6226C8723002089F3 /* Build configuration list for PBXNativeTarget "VoronoiLibSwiftExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1CA0E7226C8723002089F3 /* Debug */,
+				FF1CA0E8226C8723002089F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF1CA0E9226C8723002089F3 /* Build configuration list for PBXNativeTarget "VoronoiLibSwiftExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1CA0EA226C8723002089F3 /* Debug */,
+				FF1CA0EB226C8723002089F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF1CA0C1226C8721002089F3 /* Project object */;
+}
