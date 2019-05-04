@@ -110,7 +110,7 @@ final class BeachLine {
             rightSection = beachLine.insertSuccessor(successorNode: newSection, successorData: copy)
         
             //grab the projection of this site onto the parabola
-            let y = ParabolaMath.evalParabola(focusX: leftSection!.data.site.point.x, focusY: leftSection!.data.site.point.y, directrix: directrix, x: x)
+            let y = ParabolaMath.evalParabola(focus: leftSection!.data.site.point, directrix: directrix, x: x)
             let intersection = VPoint(x: x, y: y)
         
             //create the two half edges corresponding to this intersection
@@ -185,10 +185,10 @@ final class BeachLine {
             let d2 = (b.x*c.y - b.y*c.x) * 2
             let magnitudeB = simd_length_squared(b) // bx*bx + by*by
             let magnitudeC = simd_length_squared(c) // cx*cx + cy*cy
-            let vx = (c.y * magnitudeB - b.y * magnitudeC) / d2 + a.x
-            let vy = (b.x * magnitudeC - c.x * magnitudeB) / d2 + a.y
             
-            let vertex = VPoint(x: vx, y: vy)
+            let vertex = VPoint(
+                x: (c.y * magnitudeB - b.y * magnitudeC) / d2 + a.x,
+                y: (b.x * magnitudeC - c.x * magnitudeB) / d2 + a.y)
         
             rightSection!.data.edge?.end = vertex
         
@@ -294,7 +294,7 @@ final class BeachLine {
         }
         let site = node.data.site
         let leftSite = leftNode!.data.site
-        return ParabolaMath.intersectParabolaX(focus1X: leftSite.point.x, focus1Y: leftSite.point.y, focus2X: site.point.x, focus2Y: site.point.y, directrix: directrix)
+        return ParabolaMath.intersectParabolaX(focus1: leftSite.point, focus2: site.point, directrix: directrix)
     }
     
     private static func rightBreakpoint(node: RBTreeNode<BeachSection>, directrix: Double) -> Double {
@@ -313,7 +313,7 @@ final class BeachLine {
         }
         let site = node.data.site
         let rightSite = rightNode!.data.site
-        return ParabolaMath.intersectParabolaX(focus1X: site.point.x, focus1Y: site.point.y, focus2X: rightSite.point.x, focus2Y: rightSite.point.y, directrix: directrix)
+        return ParabolaMath.intersectParabolaX(focus1: site.point, focus2: rightSite.point, directrix: directrix)
     }
     
     private static func checkCircle(section: RBTreeNode<BeachSection>, eventQueue: MinHeap<FortuneEvent>) {
