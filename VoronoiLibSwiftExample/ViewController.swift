@@ -47,13 +47,15 @@ class ViewController: UIViewController {
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
-    private func makeSites(forViewSize size: CGSize) -> [FortuneSite] {
+    private func makeSites(forViewSize size: CGSize) -> [Site<UIColor>] {
         let numberOfSites = 50
-        var sites: [FortuneSite] = []
+        var sites: [Site<UIColor>] = []
         
         for _ in 0..<numberOfSites {
             let point = randomPointInArea(withSize: size)
-            sites.append(FortuneSite(point))
+            //let color = UIColor(hue: CGFloat(arc4random())/CGFloat(UInt32.max), saturation: 1, brightness: 1, alpha: 1)
+            let color = UIColor.red
+            sites.append(Site(point: point, userData: color))
         }
         
         return sites

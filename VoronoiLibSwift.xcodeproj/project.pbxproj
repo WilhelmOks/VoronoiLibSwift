@@ -12,7 +12,7 @@
 		FF1CA124226C8AE0002089F3 /* BeachLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B8226A7472002089F3 /* BeachLine.swift */; };
 		FF1CA125226C8AE0002089F3 /* FortuneCircleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B6226A7283002089F3 /* FortuneCircleEvent.swift */; };
 		FF1CA126226C8AE0002089F3 /* FortuneEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B4226A6E5F002089F3 /* FortuneEvent.swift */; };
-		FF1CA127226C8AE0002089F3 /* FortuneSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0AC226A574B002089F3 /* FortuneSite.swift */; };
+		FF1CA127226C8AE0002089F3 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0AC226A574B002089F3 /* Site.swift */; };
 		FF1CA128226C8AE0002089F3 /* FortuneSiteEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B2226A6DD4002089F3 /* FortuneSiteEvent.swift */; };
 		FF1CA129226C8AE0002089F3 /* MinHeap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B0226A5FC9002089F3 /* MinHeap.swift */; };
 		FF1CA12A226C8AE0002089F3 /* RBTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0A6226A3AF8002089F3 /* RBTree.swift */; };
@@ -21,6 +21,7 @@
 		FF1CA12E226C8AE0002089F3 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0BC226B559B002089F3 /* LinkedList.swift */; };
 		FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */; };
 		FF1CA130226C8AE0002089F3 /* FortunesAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */; };
+		FF359016227DE7C100C6432C /* FortuneSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF359015227DE7C100C6432C /* FortuneSite.swift */; };
 		FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5396392275EC1800EE14E8 /* Edge.swift */; };
 		FF5B14D32275E1C0006C0F4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5B14D22275E1C0006C0F4D /* AppDelegate.swift */; };
 		FF5B14D52275E1C0006C0F4D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5B14D42275E1C0006C0F4D /* ViewController.swift */; };
@@ -50,7 +51,7 @@
 		FF1CA09C226A39FD002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF1CA0A6226A3AF8002089F3 /* RBTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RBTree.swift; sourceTree = "<group>"; };
 		FF1CA0A8226A5285002089F3 /* VEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEdge.swift; sourceTree = "<group>"; };
-		FF1CA0AC226A574B002089F3 /* FortuneSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FortuneSite.swift; sourceTree = "<group>"; };
+		FF1CA0AC226A574B002089F3 /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParabolaMath.swift; sourceTree = "<group>"; };
 		FF1CA0B0226A5FC9002089F3 /* MinHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinHeap.swift; sourceTree = "<group>"; };
 		FF1CA0B2226A6DD4002089F3 /* FortuneSiteEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FortuneSiteEvent.swift; sourceTree = "<group>"; };
@@ -65,6 +66,7 @@
 		FF1CA11C226C8A79002089F3 /* VoronoiLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoronoiLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1CA11E226C8A79002089F3 /* VoronoiLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoronoiLib.h; sourceTree = "<group>"; };
 		FF1CA11F226C8A79002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF359015227DE7C100C6432C /* FortuneSite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FortuneSite.swift; sourceTree = "<group>"; };
 		FF5396392275EC1800EE14E8 /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		FF5B14D02275E1C0006C0F4D /* VoronoiLibTestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoronoiLibTestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5B14D22275E1C0006C0F4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -152,7 +154,7 @@
 				FF1CA0B8226A7472002089F3 /* BeachLine.swift */,
 				FF1CA0B6226A7283002089F3 /* FortuneCircleEvent.swift */,
 				FF1CA0B4226A6E5F002089F3 /* FortuneEvent.swift */,
-				FF1CA0AC226A574B002089F3 /* FortuneSite.swift */,
+				FF359015227DE7C100C6432C /* FortuneSite.swift */,
 				FF1CA0B2226A6DD4002089F3 /* FortuneSiteEvent.swift */,
 				FF1CA0BA226B541D002089F3 /* HashSet.swift */,
 				FF1CA0BC226B559B002089F3 /* LinkedList.swift */,
@@ -187,6 +189,7 @@
 			children = (
 				FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */,
 				FF5396392275EC1800EE14E8 /* Edge.swift */,
+				FF1CA0AC226A574B002089F3 /* Site.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -353,7 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF1CA127226C8AE0002089F3 /* FortuneSite.swift in Sources */,
+				FF1CA127226C8AE0002089F3 /* Site.swift in Sources */,
 				FF1CA12B226C8AE0002089F3 /* VEdge.swift in Sources */,
 				FF1CA12D226C8AE0002089F3 /* HashSet.swift in Sources */,
 				FFCD74D5227DB31700061146 /* VPoint.swift in Sources */,
@@ -361,6 +364,7 @@
 				FF1CA129226C8AE0002089F3 /* MinHeap.swift in Sources */,
 				FF1CA12A226C8AE0002089F3 /* RBTree.swift in Sources */,
 				FF1CA126226C8AE0002089F3 /* FortuneEvent.swift in Sources */,
+				FF359016227DE7C100C6432C /* FortuneSite.swift in Sources */,
 				FF1CA125226C8AE0002089F3 /* FortuneCircleEvent.swift in Sources */,
 				FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */,
 				FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */,

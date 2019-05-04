@@ -6,15 +6,15 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
-public final class FortunesAlgorithm {
+public final class FortunesAlgorithm<UserData> {
     private init() {}
     
     //TODO: make sites parameter a public Vector2 type
-    public static func run(sites: [FortuneSite], minX: Double, minY: Double, maxX: Double, maxY: Double) -> [Edge] {
+    public static func run(sites: [Site<UserData>], minX: Double, minY: Double, maxX: Double, maxY: Double) -> [Edge] {
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
-            let _ = eventQueue.insert(FortuneSiteEvent(s))
+            let _ = eventQueue.insert(FortuneSiteEvent(s.fortuneSite))
         }
         
         //init tree

@@ -8,16 +8,10 @@
 
 import Foundation
 import UIKit
-import VoronoiLib //TODO: delete
+import VoronoiLib
 
 class RenderView : UIView {
-    var sites: [FortuneSite] = [] {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    var siteColor: UIColor = .red {
+    var sites: [Site<UIColor>] = [] {
         didSet {
             setNeedsDisplay()
         }
@@ -38,12 +32,12 @@ class RenderView : UIView {
     override func draw(_ rect: CGRect) {
         guard !edges.isEmpty else { return }
         
-        siteColor.setFill()
-        
         for site in sites {
             let path = UIBezierPath()
             
             path.addArc(withCenter: site.point.cgPoint, radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
+            
+            site.userData?.setFill()
             
             path.fill()
         }

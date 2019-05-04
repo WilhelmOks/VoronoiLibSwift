@@ -2,17 +2,18 @@
 //  FortuneSite.swift
 //  VoronoiLibSwift
 //
-//  Created by Wilhelm Oks on 19.04.19.
+//  Created by Wilhelm Oks on 04.05.19.
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
-//TODO: should be in the public folder
-public final class FortuneSite {
-    public let point: SIMD2<Double>
-    
+class FortuneSite {
+    public let point: VPoint
+        
     var neighbors: [FortuneSite] = []
     
-    public init(_ point: SIMD2<Double>) {
+    var publicSite: Any?
+    
+    init(_ point: VPoint) {
         self.point = point
     }
 }
