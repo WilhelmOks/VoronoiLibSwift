@@ -51,7 +51,7 @@ final class MinHeap<T : AnyObject> where T : FortuneComparable {
         if count == 0 {
             fatalError("Min heap is empty")
         }
-        return items[0]
+        return items.first! //items[0]
     }
     
     private func percolateDown(_ indexArgument: Int) {
@@ -100,6 +100,8 @@ final class MinHeap<T : AnyObject> where T : FortuneComparable {
     }
     
     private func swap(_ left: Int, _ right: Int) {
+        //apparently, this is slower that swapping manually: items.swapAt(left, right)
+        
         let temp = items[left]
         items[left] = items[right]
         items[right] = temp
