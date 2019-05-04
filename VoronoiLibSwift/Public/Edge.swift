@@ -1,6 +1,6 @@
 //
 //  Edge.swift
-//  VoronoiLib
+//  VoronoiLibSwift
 //
 //  Created by Wilhelm Oks on 28.04.19.
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.

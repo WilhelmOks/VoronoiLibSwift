@@ -11,8 +11,6 @@ public final class FortuneSite {
     public let x: Double
     public let y: Double
     
-    //var cell: [VEdge] = []
-    
     var neighbors: [FortuneSite] = []
     
     public init(x: Double, y: Double) {

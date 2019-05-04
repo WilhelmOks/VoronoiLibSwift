@@ -6,8 +6,7 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
-final class VEdge
-{
+final class VEdge {
     var start: VPoint
     var end: VPoint?
     
@@ -20,8 +19,7 @@ final class VEdge
     
     var neighbor: VEdge?
     
-    init(start: VPoint, left: FortuneSite, right: FortuneSite)
-    {
+    init(start: VPoint, left: FortuneSite, right: FortuneSite) {
         self.start = start
         self.left = left
         self.right = right

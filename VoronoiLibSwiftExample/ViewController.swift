@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)
             fortunesAlgorithmStopWatch.printAverageRunTime()
-            renderView.edges = result.map { (start: $0.start.cgpoint, end: $0.end.cgpoint) }
+            renderView.edges = result.map { (start: $0.start.cgPoint, end: $0.end.cgPoint) }
         }
     }
     
@@ -85,14 +85,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension VPoint {
-    var cgpoint: CGPoint {
-        return CGPoint(x: x, y: y)
-    }
-}
-
 extension SIMD2 where Scalar == Double {
-    var cgpoint: CGPoint {
+    var cgPoint: CGPoint {
         return CGPoint(x: x, y: y)
     }
 }
