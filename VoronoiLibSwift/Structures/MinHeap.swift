@@ -100,7 +100,7 @@ final class MinHeap<T : AnyObject> where T : FortuneComparable {
     }
     
     private func swap(_ left: Int, _ right: Int) {
-        //apparently, this is slower that swapping manually: items.swapAt(left, right)
+        //apparently, this is slower than swapping manually: items.swapAt(left, right)
         
         let temp = items[left]
         items[left] = items[right]

@@ -29,6 +29,10 @@ struct ParabolaMath
         ) / (focus1.y - focus2.y)
     }
     
+    static func approxZero(_ value: Double) -> Bool {
+        return abs(value) <= epsilon
+    }
+    
     static func approxEqual(_ value1: Double, _ value2: Double) -> Bool {
         return abs(value1 - value2) <= epsilon
     }

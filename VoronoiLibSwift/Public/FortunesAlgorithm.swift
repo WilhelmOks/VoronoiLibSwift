@@ -147,7 +147,7 @@ public final class FortunesAlgorithm {
     private static func clipRay(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
         let start = edge.start
         //horizontal ray
-        if ParabolaMath.approxEqual(edge.slopeRise, 0) {
+        if ParabolaMath.approxZero(edge.slopeRise) {
             if !within(x: start.y, a: minY, b: maxY) {
                 return false
             }
@@ -175,7 +175,7 @@ public final class FortunesAlgorithm {
             return true
         }
         //vertical ray
-        if ParabolaMath.approxEqual(edge.slopeRun, 0) {
+        if ParabolaMath.approxZero(edge.slopeRun) {
             if start.x < minX || start.x > maxX {
                 return false
             }

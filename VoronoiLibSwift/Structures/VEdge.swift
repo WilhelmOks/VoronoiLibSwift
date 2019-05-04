@@ -29,7 +29,7 @@ final class VEdge {
         slopeRise = left.point.x - right.point.x
         slopeRun = -(left.point.y - right.point.y)
     
-        if ParabolaMath.approxEqual(slopeRise, 0) || ParabolaMath.approxEqual(slopeRun, 0) {
+        if ParabolaMath.approxZero(slopeRise) || ParabolaMath.approxZero(slopeRun) {
             slope = nil
             intercept = nil
         } else {
