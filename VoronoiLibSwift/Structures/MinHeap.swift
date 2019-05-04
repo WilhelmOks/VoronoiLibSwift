@@ -54,32 +54,6 @@ final class MinHeap<T : AnyObject> where T : FortuneComparable {
         return items[0]
     }
     
-    //TODO: stop using the remove on the heap as it goes o(N^2)
-    /*
-    public func remove(item: T) -> Bool {
-        var index = -1
-        for i in 0..<count {
-            //if let itemI = items[i], itemI.CompareTo(item) == 0 {
-            if let itemI = items[i], itemI === item {
-                index = i
-                break
-            }
-        }
-    
-        if (index == -1) {
-            return false
-        }
-    
-        count -= 1
-        Swap(index, count)
-        if (LeftLessThanRight(index, (index - 1)/2)) {
-            PercolateUp(index)
-        } else {
-            PercolateDown(index)
-        }
-        return true
-    }*/
-    
     private func percolateDown(_ indexArgument: Int) {
         var index = indexArgument
         while true {

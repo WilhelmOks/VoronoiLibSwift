@@ -52,8 +52,8 @@ class ViewController: UIViewController {
         var sites: [FortuneSite] = []
         
         for _ in 0..<numberOfSites {
-            var point = randomPointInArea(withSize: size)
-            sites.append(FortuneSite(x: point.x, y: point.y))
+            let point = randomPointInArea(withSize: size)
+            sites.append(FortuneSite(point))
         }
         
         return sites

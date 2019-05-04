@@ -7,11 +7,8 @@
 //
 
 final class FortuneSiteEvent : FortuneEvent {
-    override var x: Double {
-        return site.x
-    }
-    override var y: Double {
-        return site.y
+    override var point: VPoint {
+        return site.point
     }
     
     let site: FortuneSite

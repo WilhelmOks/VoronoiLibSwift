@@ -7,12 +7,11 @@
 //
 
 class FortuneEvent : FortuneComparable {
-    var x: Double { fatalError("must be overridden") }
-    var y: Double { fatalError("must be overridden") }
+    var point: VPoint { fatalError("must be overridden") }
     
     func compareTo(_ other: FortuneEvent) -> Int {
-        let c = y.compareTo(other.y);
-        return c == 0 ? x.compareTo(other.x) : c;
+        let c = point.y.compareTo(other.point.y);
+        return c == 0 ? point.x.compareTo(other.point.x) : c;
     }
 }
 

@@ -26,8 +26,8 @@ final class VEdge {
     
         //from negative reciprocal of slope of line from left to right
         //ala m = (left.y -right.y / left.x - right.x)
-        slopeRise = left.x - right.x
-        slopeRun = -(left.y - right.y)
+        slopeRise = left.point.x - right.point.x
+        slopeRun = -(left.point.y - right.point.y)
     
         if ParabolaMath.approxEqual(slopeRise, 0) || ParabolaMath.approxEqual(slopeRun, 0) {
             slope = nil

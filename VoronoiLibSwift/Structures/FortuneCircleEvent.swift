@@ -7,11 +7,8 @@
 //
 
 final class FortuneCircleEvent : FortuneEvent, Hashable {
-    override var x: Double {
-        return lowest.x
-    }
-    override var y: Double {
-        return lowest.y
+    override var point: VPoint {
+        return lowest
     }
     
     let lowest: VPoint
@@ -33,7 +30,7 @@ final class FortuneCircleEvent : FortuneEvent, Hashable {
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(x)
-        hasher.combine(y)
+        hasher.combine(point.x)
+        hasher.combine(point.y)
     }
 }

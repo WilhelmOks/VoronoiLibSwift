@@ -9,7 +9,6 @@
 public final class FortunesAlgorithm {
     private init() {}
     
-    //TODO: make not static
     //TODO: make sites parameter a public Vector2 type
     public static func run(sites: [FortuneSite], minX: Double, minY: Double, maxX: Double, maxY: Double) -> [Edge] {
         

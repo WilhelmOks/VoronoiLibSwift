@@ -43,7 +43,7 @@ class RenderView : UIView {
         for site in sites {
             let path = UIBezierPath()
             
-            path.addArc(withCenter: CGPoint(x: site.x, y: site.y), radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
+            path.addArc(withCenter: site.point.cgPoint, radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
             
             path.fill()
         }

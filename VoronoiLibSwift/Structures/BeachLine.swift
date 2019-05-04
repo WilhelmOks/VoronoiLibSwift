@@ -6,6 +6,8 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
+import simd
+
 final class BeachSection {
     let site: FortuneSite
     var edge: VEdge?
@@ -26,8 +28,8 @@ final class BeachLine {
     
     func addBeachSection(siteEvent: FortuneSiteEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: LinkedList<VEdge>) {
         let site = siteEvent.site
-        let x = site.x
-        let directrix = site.y
+        let x = site.point.x
+        let directrix = site.point.y
     
         var leftSection: RBTreeNode<BeachSection>? = nil
         var rightSection: RBTreeNode<BeachSection>? = nil
@@ -108,7 +110,7 @@ final class BeachLine {
             rightSection = beachLine.insertSuccessor(successorNode: newSection, successorData: copy)
         
             //grab the projection of this site onto the parabola
-            let y = ParabolaMath.evalParabola(focusX: leftSection!.data.site.x, focusY: leftSection!.data.site.y, directrix: directrix, x: x)
+            let y = ParabolaMath.evalParabola(focusX: leftSection!.data.site.point.x, focusY: leftSection!.data.site.point.y, directrix: directrix, x: x)
             let intersection = VPoint(x: x, y: y)
         
             //create the two half edges corresponding to this intersection
@@ -138,7 +140,7 @@ final class BeachLine {
         else if leftSection != nil && rightSection == nil {
             //let minValue = -1.7976931348623157E+308
             let minValue = -Double.greatestFiniteMagnitude
-            let start = VPoint(x: (leftSection!.data.site.x + site.x) * 0.5, y: minValue)
+            let start = VPoint(x: (leftSection!.data.site.point.x + site.point.x) * 0.5, y: minValue)
             let infEdge = VEdge(start: start, left: leftSection!.data.site, right: site)
             let newEdge = VEdge(start: start, left: site, right: leftSection!.data.site)
         
@@ -175,19 +177,16 @@ final class BeachLine {
         
             //bring a to the origin
             let leftSite = leftSection!.data.site
-            let ax = leftSite.x
-            let ay = leftSite.y
-            let bx = site.x - ax
-            let by = site.y - ay
+            let a = leftSite.point
+            let b = site.point - a
         
             let rightSite = rightSection!.data.site
-            let cx = rightSite.x - ax
-            let cy = rightSite.y - ay
-            let d = bx*cy - by*cx
-            let magnitudeB = bx*bx + by*by
-            let magnitudeC = cx*cx + cy*cy
-            let vx = (cy*magnitudeB - by * magnitudeC)/(2*d) + ax
-            let vy = (bx*magnitudeC - cx * magnitudeB)/(2*d) + ay
+            let c = rightSite.point - a
+            let d2 = (b.x*c.y - b.y*c.x) * 2
+            let magnitudeB = simd_length_squared(b) // bx*bx + by*by
+            let magnitudeC = simd_length_squared(c) // cx*cx + cy*cy
+            let vx = (c.y * magnitudeB - b.y * magnitudeC) / d2 + a.x
+            let vy = (b.x * magnitudeC - c.x * magnitudeB) / d2 + a.y
             
             let vertex = VPoint(x: vx, y: vy)
         
@@ -214,7 +213,7 @@ final class BeachLine {
     
     func removeBeachSection(circle: FortuneCircleEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: LinkedList<VEdge>) {
         let section = circle.toDelete
-        let x = circle.x
+        let x = circle.point.x
         let y = circle.yCenter
         let vertex = VPoint(x: x, y: y)
     
@@ -224,16 +223,16 @@ final class BeachLine {
         //look left
         var prev = section.previous!
         while prev.data.circleEvent != nil &&
-        ParabolaMath.approxEqual(x - prev.data.circleEvent!.x, 0) &&
-        ParabolaMath.approxEqual(y - prev.data.circleEvent!.y, 0) {
+        ParabolaMath.approxEqual(x - prev.data.circleEvent!.point.x, 0) &&
+            ParabolaMath.approxEqual(y - prev.data.circleEvent!.point.y, 0) { //TODO: compare without 0 to be more efficient
             toBeRemoved.append(prev)
             prev = prev.previous!
         }
     
         var next = section.next!
         while next.data.circleEvent != nil &&
-        ParabolaMath.approxEqual(x - next.data.circleEvent!.x, 0) &&
-        ParabolaMath.approxEqual(y - next.data.circleEvent!.y, 0) {
+        ParabolaMath.approxEqual(x - next.data.circleEvent!.point.x, 0) &&
+        ParabolaMath.approxEqual(y - next.data.circleEvent!.point.y, 0) {
             toBeRemoved.append(next)
             next = next.next!
         }
@@ -282,39 +281,39 @@ final class BeachLine {
     private static func leftBreakpoint(node: RBTreeNode<BeachSection>, directrix: Double) -> Double {
         let leftNode = node.previous
         //degenerate parabola
-        if ParabolaMath.approxEqual(node.data.site.y - directrix, 0) {
-            return node.data.site.x
+        if ParabolaMath.approxEqual(node.data.site.point.y - directrix, 0) {
+            return node.data.site.point.x
         }
         //node is the first piece of the beach line
         if leftNode == nil {
             return -Double.infinity
         }
         //left node is degenerate
-        if ParabolaMath.approxEqual(leftNode!.data.site.y - directrix, 0) {
-            return leftNode!.data.site.x
+        if ParabolaMath.approxEqual(leftNode!.data.site.point.y - directrix, 0) {
+            return leftNode!.data.site.point.x
         }
         let site = node.data.site
         let leftSite = leftNode!.data.site
-        return ParabolaMath.intersectParabolaX(focus1X: leftSite.x, focus1Y: leftSite.y, focus2X: site.x, focus2Y: site.y, directrix: directrix)
+        return ParabolaMath.intersectParabolaX(focus1X: leftSite.point.x, focus1Y: leftSite.point.y, focus2X: site.point.x, focus2Y: site.point.y, directrix: directrix)
     }
     
     private static func rightBreakpoint(node: RBTreeNode<BeachSection>, directrix: Double) -> Double {
         let rightNode = node.next
         //degenerate parabola
-        if ParabolaMath.approxEqual(node.data.site.y - directrix, 0) {
-            return node.data.site.x
+        if ParabolaMath.approxEqual(node.data.site.point.y - directrix, 0) {
+            return node.data.site.point.x
         }
         //node is the last piece of the beach line
         if rightNode == nil {
             return Double.infinity
         }
         //left node is degenerate
-        if ParabolaMath.approxEqual(rightNode!.data.site.y - directrix, 0) {
-            return rightNode!.data.site.x
+        if ParabolaMath.approxEqual(rightNode!.data.site.point.y - directrix, 0) {
+            return rightNode!.data.site.point.x
         }
         let site = node.data.site
         let rightSite = rightNode!.data.site
-        return ParabolaMath.intersectParabolaX(focus1X: site.x, focus1Y: site.y, focus2X: rightSite.x, focus2Y: rightSite.y, directrix: directrix)
+        return ParabolaMath.intersectParabolaX(focus1X: site.point.x, focus1Y: site.point.y, focus2X: rightSite.point.x, focus2Y: rightSite.point.y, directrix: directrix)
     }
     
     private static func checkCircle(section: RBTreeNode<BeachSection>, eventQueue: MinHeap<FortuneEvent>) {
@@ -342,30 +341,31 @@ final class BeachLine {
         //MATH HACKS: place center at origin and
         //draw vectors a and c to
         //left and right respectively
-        let bx = centerSite.x,
-        by = centerSite.y,
-        ax = leftSite.x - bx,
-        ay = leftSite.y - by,
-        cx = rightSite.x - bx,
-        cy = rightSite.y - by
+        let b = centerSite.point
+        let a = leftSite.point - b
+        let c = rightSite.point - b
     
         //The center beach section can only dissapear when
         //the angle between a and c is negative
-        let d = ax*cy - ay*cx
+        let d = a.x*c.y - a.y*c.x
         if ParabolaMath.approxGreaterThanOrEqualTo(d, 0) {
             return
         }
     
-        let magnitudeA = ax*ax + ay*ay
-        let magnitudeC = cx*cx + cy*cy
-        let x = (cy*magnitudeA - ay*magnitudeC)/(2*d)
-        let y = (ax*magnitudeC - cx*magnitudeA)/(2*d)
+        let d2 = d * 2
+        
+        let magnitudeA = simd_length_squared(a) // ax*ax + ay*ay
+        let magnitudeC = simd_length_squared(c) // cx*cx + cy*cy
+        let x = (c.y * magnitudeA - a.y * magnitudeC) / d2
+        let y = (a.x * magnitudeC - c.x * magnitudeA) / d2
+        let point = VPoint(x, y)
     
         //add back offset
-        let ycenter = y + by
+        let ycenter = y + b.y
         //y center is off
         let circleEvent = FortuneCircleEvent(
-            lowest: VPoint(x: x + bx, y: ycenter + sqrt(x * x + y * y)),
+            //lowest: VPoint(x: x + b.x, y: ycenter + sqrt(x * x + y * y)),
+            lowest: VPoint(x: x + b.x, y: ycenter + simd_length(point)),
             yCenter: ycenter,
             toDelete: section
         )
