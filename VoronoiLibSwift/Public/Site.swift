@@ -19,6 +19,8 @@ public final class Site<UserData> {
         return fortuneSite.neighbors.map { $0.publicSite as! Site<UserData> }
     }
     
+    internal(set) public var polygon: [SIMD2<Double>] = []
+    
     public init(point: SIMD2<Double>, userData: UserData? = nil) {
         self.userData = userData
         self.fortuneSite = FortuneSite(point)

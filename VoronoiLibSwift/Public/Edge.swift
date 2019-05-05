@@ -15,3 +15,11 @@ public final class Edge {
         self.end = end
     }
 }
+
+extension Edge {
+    convenience init(_ vEdge: VEdge) {
+        let start = vEdge.start
+        let end = vEdge.end ?? VPoint(x: 0, y: 0)
+        self.init(start: .init(x: start.x, y: start.y), end: .init(x: end.x, y: end.y))
+    }
+}

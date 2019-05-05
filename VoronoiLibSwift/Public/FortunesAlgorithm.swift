@@ -6,10 +6,106 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
+//MARK: - public interface
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
     public static func run(sites: [Site<UserData>], area: Rect, options: Set<Option>) -> [Edge] {
+        let vEdges = runMainAlgorithm(sites: sites, area: area)
+        
+        if options.contains(.calculatePolygonsForSites) {
+            addPolygons(to: sites, from: vEdges.array)
+        }
+        
+        let edges = vEdges.array.map { Edge($0) }
+        
+        return edges
+    }
+}
+
+//MARK: - options
+public extension FortunesAlgorithm {
+    enum Rect {
+        case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
+        case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
+        case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
+        case sizeXY(x: Double, y: Double)
+        case sizeSimd(_ size: SIMD2<Double>)
+        
+        fileprivate var double4: (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+            switch self {
+            case .minMaxXY(minX: let minX, minY: let minY, maxX: let maxX, maxY: let maxY):
+                return (minX, minY, maxX, maxY)
+            case .minMaxSimd(min: let min, max: let max):
+                return (min.x, min.y, max.x, max.y)
+            case .rangeXY(x: let x, y: let y):
+                return (x.lowerBound, y.lowerBound, x.upperBound, y.upperBound)
+            case .sizeXY(x: let x, y: let y):
+                return (0, 0, x, y)
+            case .sizeSimd(let size):
+                return (0, 0, size.x, size.y)
+            }
+        }
+    }
+    
+    enum Option {
+        case calculatePolygonsForSites
+    }
+}
+
+//MARK: - polygon calculation
+private extension FortunesAlgorithm {
+    static func addPolygons(to sites: [Site<UserData>], from edges: [VEdge]) {
+        for site in sites {
+            var polygonEdges: [VEdge] = []
+            for neighbor in site.fortuneSite.neighbors {
+                if let edge = findEdge(in: edges, between: site.fortuneSite, and: neighbor) {
+                    polygonEdges.append(edge)
+                }
+            }
+            
+            let orderedPolygonEdges = orderedForPolygon(polygonEdges)
+            site.polygon = orderedPolygonEdges.map { $0.start }
+        }
+    }
+    
+    static func findEdge(in edges: [VEdge], between site1: FortuneSite, and site2: FortuneSite) -> VEdge? {
+        return edges.first { $0.left === site1 && $0.right === site2 || $0.right === site1 && $0.left === site2 }
+    }
+    
+    static func orderedForPolygon(_ edges: [VEdge]) -> [Edge] { //TODO: optimize: return [VPoint] instead of [Edge]
+        guard edges.count > 1 else { return edges.map { Edge($0) } }
+        
+        var orderedEdges: [Edge] = [Edge(edges.first!)]
+        var unorderedEdges = Array(edges.dropFirst())
+        
+        while !unorderedEdges.isEmpty {
+            let last = orderedEdges.last!
+            let foundConnection = unorderedEdges.first { approxEqual($0.start, last.end) || approxEqual($0.end, last.end) }
+            if let foundConnection = foundConnection {
+                let edge = approxEqual(last.end, foundConnection.start) ? Edge(start: foundConnection.start, end: foundConnection.end ?? VPoint.zero) : Edge(start: foundConnection.end ?? VPoint.zero, end: foundConnection.start)
+                orderedEdges.append(edge)
+                unorderedEdges.removeAll { $0 === foundConnection }
+            } else {
+                break
+            }
+        }
+        
+        return orderedEdges
+    }
+    
+    static func approxEqual(_ point1: VPoint?, _ point2: VPoint?) -> Bool {
+        if let point1 = point1, let point2 = point2 {
+            return ParabolaMath.approxEqual(point1.x, point2.x) && ParabolaMath.approxEqual(point1.y, point2.y)
+        } else {
+            return false
+        }
+    }
+}
+
+//MARK: - main algorithm
+private extension FortunesAlgorithm {
+    static func runMainAlgorithm(sites: [Site<UserData>], area: Rect) -> LinkedList<VEdge> {
         let (minX, minY, maxX, maxY) = area.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
@@ -44,46 +140,11 @@ public final class FortunesAlgorithm<UserData> {
                 edgesToRemove.append(edge)
             }
         }
-        edges.removeAll(edgesToRemove)
+        edges.removeAll(edgesToRemove) //TODO: test if .filter is faster
         
-        return edges.array.map { edge in
-            let start = edge.start
-            let end = edge.end ?? VPoint(x: 0, y: 0)
-            return Edge(start: .init(x: start.x, y: start.y), end: .init(x: end.x, y: end.y))
-        }
-    }
-}
-
-extension FortunesAlgorithm {
-    public enum Rect {
-        case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
-        case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
-        case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
-        case sizeXY(x: Double, y: Double)
-        case sizeSimd(_ size: SIMD2<Double>)
-        
-        fileprivate var double4: (minX: Double, minY: Double, maxX: Double, maxY: Double) {
-            switch self {
-            case .minMaxXY(minX: let minX, minY: let minY, maxX: let maxX, maxY: let maxY):
-                return (minX, minY, maxX, maxY)
-            case .minMaxSimd(min: let min, max: let max):
-                return (min.x, min.y, max.x, max.y)
-            case .rangeXY(x: let x, y: let y):
-                return (x.lowerBound, y.lowerBound, x.upperBound, y.upperBound)
-            case .sizeXY(x: let x, y: let y):
-                return (0, 0, x, y)
-            case .sizeSimd(let size):
-                return (0, 0, size.x, size.y)
-            }
-        }
+        return edges
     }
     
-    public enum Option {
-        case calculatePolygonEdgesAroundSites
-    }
-}
-
-private extension FortunesAlgorithm {
     //combination of personal ray clipping alg and cohen sutherland
     static func clipEdge(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
         var accept = false
