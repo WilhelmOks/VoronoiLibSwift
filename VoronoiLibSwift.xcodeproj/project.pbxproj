@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF1CA09B226A39FD002089F3 /* VoronoiLibSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA09A226A39FD002089F3 /* VoronoiLibSwiftTests.swift */; };
+		FF1CA09B226A39FD002089F3 /* AreaOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA09A226A39FD002089F3 /* AreaOptionsTests.swift */; };
 		FF1CA120226C8A79002089F3 /* VoronoiLib.h in Headers */ = {isa = PBXBuildFile; fileRef = FF1CA11E226C8A79002089F3 /* VoronoiLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF1CA124226C8AE0002089F3 /* BeachLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B8226A7472002089F3 /* BeachLine.swift */; };
 		FF1CA125226C8AE0002089F3 /* FortuneCircleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0B6226A7283002089F3 /* FortuneCircleEvent.swift */; };
@@ -47,7 +47,7 @@
 		FF1CA08F226A39FC002089F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF1CA091226A39FC002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF1CA096226A39FD002089F3 /* VoronoiLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoronoiLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF1CA09A226A39FD002089F3 /* VoronoiLibSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoronoiLibSwiftTests.swift; sourceTree = "<group>"; };
+		FF1CA09A226A39FD002089F3 /* AreaOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOptionsTests.swift; sourceTree = "<group>"; };
 		FF1CA09C226A39FD002089F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF1CA0A6226A3AF8002089F3 /* RBTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RBTree.swift; sourceTree = "<group>"; };
 		FF1CA0A8226A5285002089F3 /* VEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEdge.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 		FF1CA099226A39FD002089F3 /* VoronoiLibSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF1CA09A226A39FD002089F3 /* VoronoiLibSwiftTests.swift */,
+				FF1CA09A226A39FD002089F3 /* AreaOptionsTests.swift */,
 				FF1CA09C226A39FD002089F3 /* Info.plist */,
 			);
 			path = VoronoiLibSwiftTests;
@@ -348,7 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF1CA09B226A39FD002089F3 /* VoronoiLibSwiftTests.swift in Sources */,
+				FF1CA09B226A39FD002089F3 /* AreaOptionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
