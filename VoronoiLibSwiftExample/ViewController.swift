@@ -66,9 +66,9 @@ class ViewController: UIViewController {
         renderView.sites = sites
         
         fortunesAlgorithmStopWatch.run({ () -> [Edge] in
-            let maxX = Double(size.width)
-            let maxY = Double(size.height)
-            let edges = FortunesAlgorithm.run(sites: sites, minX: 0, minY: 0, maxX: maxX, maxY: maxY)
+            let width = Double(size.width)
+            let height = Double(size.height)
+            let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: width, y: height))
             return edges
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

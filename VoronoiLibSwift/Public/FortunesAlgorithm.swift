@@ -9,8 +9,31 @@
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    //TODO: make sites parameter a public Vector2 type
-    public static func run(sites: [Site<UserData>], minX: Double, minY: Double, maxX: Double, maxY: Double) -> [Edge] {
+    public enum Rect {
+        case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
+        case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
+        case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
+        case sizeXY(x: Double, y: Double)
+        case sizeSimd(_ size: SIMD2<Double>)
+        
+        fileprivate var double4: (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+            switch self {
+            case .minMaxXY(minX: let minX, minY: let minY, maxX: let maxX, maxY: let maxY):
+                return (minX, minY, maxX, maxY)
+            case .minMaxSimd(min: let min, max: let max):
+                return (min.x, min.y, max.x, max.y)
+            case .rangeXY(x: let x, y: let y):
+                return (x.lowerBound, y.lowerBound, x.upperBound, y.upperBound)
+            case .sizeXY(x: let x, y: let y):
+                return (0, 0, x, y)
+            case .sizeSimd(let size):
+                return (0, 0, size.x, size.y)
+            }
+        }
+    }
+    
+    public static func run(sites: [Site<UserData>], area: Rect) -> [Edge] {
+        let (minX, minY, maxX, maxY) = area.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
