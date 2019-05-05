@@ -32,10 +32,24 @@ class RenderView : UIView {
     override func draw(_ rect: CGRect) {
         guard !edges.isEmpty else { return }
         
-        for site in sites {
+        /*for site in sites {
             let path = UIBezierPath()
             
             path.addArc(withCenter: site.point.cgPoint, radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
+            
+            site.userData?.setFill()
+            
+            path.fill()
+        }*/
+        
+        for site in sites {
+            let path = UIBezierPath()
+            
+            path.move(to: site.polygon.first!.cgPoint)
+            
+            for point in site.polygon.dropFirst() {
+                path.addLine(to: point.cgPoint)
+            }
             
             site.userData?.setFill()
             

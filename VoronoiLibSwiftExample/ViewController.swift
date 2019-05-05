@@ -53,8 +53,8 @@ class ViewController: UIViewController {
         
         for _ in 0..<numberOfSites {
             let point = randomPointInArea(withSize: size)
-            //let color = UIColor(hue: CGFloat(arc4random())/CGFloat(UInt32.max), saturation: 1, brightness: 1, alpha: 1)
-            let color = UIColor.red
+            let color = UIColor(hue: CGFloat(arc4random())/CGFloat(UInt32.max)*0.2+0.5, saturation: 0.7, brightness: 0.9, alpha: 1)
+            //let color = UIColor.red
             sites.append(Site(point: point, userData: color))
         }
         
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         fortunesAlgorithmStopWatch.run({ () -> [Edge] in
             let width = Double(size.width)
             let height = Double(size.height)
-            let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: width, y: height), options: [])
+            let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: width, y: height), options: [.calculatePolygonsForSites])
             return edges
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

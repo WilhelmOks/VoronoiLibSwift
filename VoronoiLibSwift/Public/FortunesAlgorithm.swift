@@ -73,7 +73,7 @@ private extension FortunesAlgorithm {
         return edges.first { $0.left === site1 && $0.right === site2 || $0.right === site1 && $0.left === site2 }
     }
     
-    static func orderedForPolygon(_ edges: [VEdge]) -> [Edge] { //TODO: optimize: return [VPoint] instead of [Edge]
+    static func orderedForPolygon(_ edges: [VEdge]) -> [Edge] {
         guard edges.count > 1 else { return edges.map { Edge($0) } }
         
         var orderedEdges: [Edge] = [Edge(edges.first!)]
