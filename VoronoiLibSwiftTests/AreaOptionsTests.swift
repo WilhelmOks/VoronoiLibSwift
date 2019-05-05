@@ -23,11 +23,9 @@ class AreaOptionsTests: XCTestCase {
         return points.map { Site(point: $0) }
     }
 
-    func testMinMaxXY() {
-        let edges = FortunesAlgorithm.run(sites: sites, area: .minMaxXY(minX: -1, minY: -2, maxX: 1, maxY: 2))
-        
-        let edgesLimits = limits(forEdges: edges)
-        
+    func testMinMaxXY() {        
+        let edgesLimits = limitsForEdges(withArea: .minMaxXY(minX: -1, minY: -2, maxX: 1, maxY: 2))
+
         XCTAssertEqual(edgesLimits.minX, -1, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.minY, -2, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.maxX, 1, accuracy: accuracy)
@@ -35,10 +33,8 @@ class AreaOptionsTests: XCTestCase {
     }
     
     func testMinMaxSimd() {
-        let edges = FortunesAlgorithm.run(sites: sites, area: .minMaxSimd(min: .init(x: -1, y: -2), max: .init(x: 1, y: 2)))
-        
-        let edgesLimits = limits(forEdges: edges)
-        
+        let edgesLimits = limitsForEdges(withArea: .minMaxSimd(min: .init(x: -1, y: -2), max: .init(x: 1, y: 2)))
+
         XCTAssertEqual(edgesLimits.minX, -1, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.minY, -2, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.maxX, 1, accuracy: accuracy)
@@ -46,10 +42,8 @@ class AreaOptionsTests: XCTestCase {
     }
     
     func testRangeXY() {
-        let edges = FortunesAlgorithm.run(sites: sites, area: .rangeXY(x: -1...1, y: -2...2))
-        
-        let edgesLimits = limits(forEdges: edges)
-        
+        let edgesLimits = limitsForEdges(withArea: .rangeXY(x: -1...1, y: -2...2))
+
         XCTAssertEqual(edgesLimits.minX, -1, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.minY, -2, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.maxX, 1, accuracy: accuracy)
@@ -57,9 +51,7 @@ class AreaOptionsTests: XCTestCase {
     }
     
     func testSizeXY() {
-        let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: 1, y: 2))
-        
-        let edgesLimits = limits(forEdges: edges)
+        let edgesLimits = limitsForEdges(withArea: .sizeXY(x: 1, y: 2))
         
         XCTAssertEqual(edgesLimits.minX, 0, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.minY, 0, accuracy: accuracy)
@@ -68,14 +60,17 @@ class AreaOptionsTests: XCTestCase {
     }
     
     func testSizeSimd() {
-        let edges = FortunesAlgorithm.run(sites: sites, area: .sizeSimd(.init(x: 1, y: 2)))
-        
-        let edgesLimits = limits(forEdges: edges)
+        let edgesLimits = limitsForEdges(withArea: .sizeSimd(.init(x: 1, y: 2)))
         
         XCTAssertEqual(edgesLimits.minX, 0, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.minY, 0, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.maxX, 1, accuracy: accuracy)
         XCTAssertEqual(edgesLimits.maxY, 2, accuracy: accuracy)
+    }
+    
+    private func limitsForEdges(withArea area: FortunesAlgorithm<Void>.Rect) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+        let edges = FortunesAlgorithm.run(sites: sites, area: area, options: [])
+        return limits(forEdges: edges)
     }
     
     private func limits(forEdges edges: [Edge]) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {

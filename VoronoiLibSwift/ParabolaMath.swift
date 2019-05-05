@@ -8,8 +8,7 @@
 
 import simd
 
-struct ParabolaMath
-{
+struct ParabolaMath {
     private static let epsilon = 4.94065645841247E-324 * 1E100
     
     static func evalParabola(focus: VPoint, directrix: Double, x: Double) -> Double {
@@ -29,19 +28,19 @@ struct ParabolaMath
         ) / (focus1.y - focus2.y)
     }
     
-    static func approxZero(_ value: Double) -> Bool {
+    @inlinable static func approxZero(_ value: Double) -> Bool {
         return abs(value) <= epsilon
     }
     
-    static func approxEqual(_ value1: Double, _ value2: Double) -> Bool {
+    @inlinable static func approxEqual(_ value1: Double, _ value2: Double) -> Bool {
         return abs(value1 - value2) <= epsilon
     }
     
-    static func approxGreaterThanOrEqualTo(_ value1: Double, _ value2: Double) -> Bool {
+    @inlinable static func approxGreaterThanOrEqualTo(_ value1: Double, _ value2: Double) -> Bool {
         return value1 > value2 || approxEqual(value1, value2)
     }
     
-    static func approxLessThanOrEqualTo(_ value1: Double, _ value2: Double) -> Bool {
+    @inlinable static func approxLessThanOrEqualTo(_ value1: Double, _ value2: Double) -> Bool {
         return value1 < value2 || approxEqual(value1, value2)
     }
 }

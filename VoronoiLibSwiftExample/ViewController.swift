@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         fortunesAlgorithmStopWatch.run({ () -> [Edge] in
             let width = Double(size.width)
             let height = Double(size.height)
-            let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: width, y: height))
+            let edges = FortunesAlgorithm.run(sites: sites, area: .sizeXY(x: width, y: height), options: [])
             return edges
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

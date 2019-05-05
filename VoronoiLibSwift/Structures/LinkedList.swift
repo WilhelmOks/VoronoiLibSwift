@@ -10,11 +10,11 @@
 final class LinkedList<T> where T : Equatable {
     private(set) var array = Array<T>()
     
-    func addFirst(_ newMember: T) {
+    @inlinable func addFirst(_ newMember: T) {
         array.insert(newMember, at: 0)
     }
     
-    func removeAll(_ members: [T]) {
+    @inlinable func removeAll(_ members: [T]) {
         array.removeAllMembers(members)
     }
 }

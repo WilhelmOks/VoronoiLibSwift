@@ -9,30 +9,7 @@
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public enum Rect {
-        case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
-        case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
-        case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
-        case sizeXY(x: Double, y: Double)
-        case sizeSimd(_ size: SIMD2<Double>)
-        
-        fileprivate var double4: (minX: Double, minY: Double, maxX: Double, maxY: Double) {
-            switch self {
-            case .minMaxXY(minX: let minX, minY: let minY, maxX: let maxX, maxY: let maxY):
-                return (minX, minY, maxX, maxY)
-            case .minMaxSimd(min: let min, max: let max):
-                return (min.x, min.y, max.x, max.y)
-            case .rangeXY(x: let x, y: let y):
-                return (x.lowerBound, y.lowerBound, x.upperBound, y.upperBound)
-            case .sizeXY(x: let x, y: let y):
-                return (0, 0, x, y)
-            case .sizeSimd(let size):
-                return (0, 0, size.x, size.y)
-            }
-        }
-    }
-    
-    public static func run(sites: [Site<UserData>], area: Rect) -> [Edge] {
+    public static func run(sites: [Site<UserData>], area: Rect, options: Set<Option>) -> [Edge] {
         let (minX, minY, maxX, maxY) = area.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
@@ -75,9 +52,40 @@ public final class FortunesAlgorithm<UserData> {
             return Edge(start: .init(x: start.x, y: start.y), end: .init(x: end.x, y: end.y))
         }
     }
+}
+
+extension FortunesAlgorithm {
+    public enum Rect {
+        case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
+        case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
+        case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
+        case sizeXY(x: Double, y: Double)
+        case sizeSimd(_ size: SIMD2<Double>)
+        
+        fileprivate var double4: (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+            switch self {
+            case .minMaxXY(minX: let minX, minY: let minY, maxX: let maxX, maxY: let maxY):
+                return (minX, minY, maxX, maxY)
+            case .minMaxSimd(min: let min, max: let max):
+                return (min.x, min.y, max.x, max.y)
+            case .rangeXY(x: let x, y: let y):
+                return (x.lowerBound, y.lowerBound, x.upperBound, y.upperBound)
+            case .sizeXY(x: let x, y: let y):
+                return (0, 0, x, y)
+            case .sizeSimd(let size):
+                return (0, 0, size.x, size.y)
+            }
+        }
+    }
     
+    public enum Option {
+        case calculatePolygonEdgesAroundSites
+    }
+}
+
+private extension FortunesAlgorithm {
     //combination of personal ray clipping alg and cohen sutherland
-    private static func clipEdge(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
+    static func clipEdge(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
         var accept = false
     
         //if its a ray
@@ -147,7 +155,7 @@ public final class FortunesAlgorithm<UserData> {
         return accept
     }
     
-    private static func computeOutCode(x: Double, y: Double, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Int {
+    static func computeOutCode(x: Double, y: Double, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Int {
         var code: Int = 0
         if ParabolaMath.approxEqual(x, minX) || ParabolaMath.approxEqual(x, maxX) {
             
@@ -167,7 +175,7 @@ public final class FortunesAlgorithm<UserData> {
         return code
     }
     
-    private static func clipRay(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
+    static func clipRay(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
         let start = edge.start
         //horizontal ray
         if ParabolaMath.approxZero(edge.slopeRise) {
@@ -287,15 +295,15 @@ public final class FortunesAlgorithm<UserData> {
         return edge.end != nil
     }
     
-    private static func within(x: Double, a: Double, b: Double) -> Bool {
+    static func within(x: Double, a: Double, b: Double) -> Bool {
         return ParabolaMath.approxGreaterThanOrEqualTo(x, a) && ParabolaMath.approxLessThanOrEqualTo(x, b)
     }
     
-    private static func calcY(m: Double, x: Double, b: Double) -> Double {
+    static func calcY(m: Double, x: Double, b: Double) -> Double {
         return m * x + b
     }
     
-    private static func calcX(m: Double, y: Double, b: Double) -> Double {
+    static func calcX(m: Double, y: Double, b: Double) -> Double {
         return (y - b) / m
     }
 }

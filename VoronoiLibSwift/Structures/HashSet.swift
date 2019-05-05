@@ -10,15 +10,15 @@
 final class HashSet<T> where T : Hashable {
     private var set = Set<T>()
     
-    func add(_ newMember: T) {
+    @inlinable func add(_ newMember: T) {
         set.insert(newMember)
     }
     
-    func contains(_ member: T) -> Bool {
+    @inlinable func contains(_ member: T) -> Bool {
         return set.contains(member)
     }
     
-    func remove(_ member: T) {
+    @inlinable func remove(_ member: T) {
         set.remove(member)
     }
 }

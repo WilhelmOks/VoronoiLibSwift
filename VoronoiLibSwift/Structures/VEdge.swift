@@ -41,7 +41,7 @@ final class VEdge {
 }
 
 extension VEdge : Equatable {
-    public static func == (lhs: VEdge, rhs: VEdge) -> Bool {
+    @inlinable public static func == (lhs: VEdge, rhs: VEdge) -> Bool {
         return lhs === rhs
     }
 }
