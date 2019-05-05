@@ -45,6 +45,8 @@ class RenderView : UIView {
         for site in sites {
             let path = UIBezierPath()
             
+            guard site.polygon.count > 2 else { continue }
+            
             path.move(to: site.polygon.first!.cgPoint)
             
             for point in site.polygon.dropFirst() {
