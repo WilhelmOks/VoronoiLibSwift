@@ -28,8 +28,7 @@ public final class FortunesAlgorithm<UserData> {
         }
         
         if options.contains(.calculateCellPolygons) {
-            let edgesForPolygons: [VEdge] = options.contains(.edgesAlsoOnClipAreaBorders) ? resultEdges : edges + borderEdges
-            addPolygons(to: sites, from: edgesForPolygons)
+            addPolygons(to: sites)
         }
         
         return resultEdges.map { Edge($0) }
@@ -73,7 +72,7 @@ private extension FortunesAlgorithm {
         return [] //TODO: ...
     }
     
-    static func addPolygons(to sites: [Site<UserData>], from edges: [VEdge]) {
+    static func addPolygons(to sites: [Site<UserData>]) {
         for site in sites {
             /*var polygonEdges: [VEdge] = []
             for neighbor in site.fortuneSite.neighbors {
