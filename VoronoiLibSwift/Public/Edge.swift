@@ -14,6 +14,8 @@ public final class Edge {
         self.start = start
         self.end = end
     }
+    
+    //TODO: add left/right Site
 }
 
 extension Edge {

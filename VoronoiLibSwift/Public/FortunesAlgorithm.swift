@@ -10,16 +10,29 @@
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public static func run(sites: [Site<UserData>], area: Rect, options: Set<Option>) -> [Edge] {
-        let vEdges = runMainAlgorithm(sites: sites, area: area)
+    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge] {
+        let edges = runMainAlgorithm(sites: sites, clipArea: clipArea).array
         
-        if options.contains(.calculatePolygonsForSites) {
-            addPolygons(to: sites, from: vEdges.array)
+        let borderEdges: [VEdge]
+        if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
+            borderEdges = makeEdgesOnClipAreaBorders()
+        } else {
+            borderEdges = []
         }
         
-        let edges = vEdges.array.map { Edge($0) }
+        let resultEdges: [VEdge]
+        if options.contains(.edgesAlsoOnClipAreaBorders) {
+            resultEdges = edges + borderEdges
+        } else {
+            resultEdges = edges
+        }
         
-        return edges
+        if options.contains(.calculateCellPolygons) {
+            let edgesForPolygons: [VEdge] = options.contains(.edgesAlsoOnClipAreaBorders) ? resultEdges : edges + borderEdges
+            addPolygons(to: sites, from: edgesForPolygons)
+        }
+        
+        return resultEdges.map { Edge($0) }
     }
 }
 
@@ -49,12 +62,17 @@ public extension FortunesAlgorithm {
     }
     
     enum Option {
-        case calculatePolygonsForSites
+        case edgesAlsoOnClipAreaBorders
+        case calculateCellPolygons
     }
 }
 
 //MARK: - polygon calculation
 private extension FortunesAlgorithm {
+    static func makeEdgesOnClipAreaBorders() -> [VEdge] {
+        return [] //TODO: ...
+    }
+    
     static func addPolygons(to sites: [Site<UserData>], from edges: [VEdge]) {
         for site in sites {
             var polygonEdges: [VEdge] = []
@@ -65,7 +83,7 @@ private extension FortunesAlgorithm {
             }
             
             let orderedPolygonEdges = orderedForPolygon(polygonEdges)
-            site.polygon = orderedPolygonEdges.map { $0.start }
+            site.cellPolygonVertices = orderedPolygonEdges.map { $0.start }
         }
     }
     
@@ -105,8 +123,8 @@ private extension FortunesAlgorithm {
 
 //MARK: - main algorithm
 private extension FortunesAlgorithm {
-    static func runMainAlgorithm(sites: [Site<UserData>], area: Rect) -> LinkedList<VEdge> {
-        let (minX, minY, maxX, maxY) = area.double4
+    static func runMainAlgorithm(sites: [Site<UserData>], clipArea: Rect) -> LinkedList<VEdge> {
+        let (minX, minY, maxX, maxY) = clipArea.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
