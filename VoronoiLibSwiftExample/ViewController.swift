@@ -65,7 +65,7 @@ class ViewController: UIViewController {
         let sites = makeSites(forViewSize: size)
         renderView.sites = sites
         
-        fortunesAlgorithmStopWatch.run({ () -> [Edge] in
+        fortunesAlgorithmStopWatch.run({ () -> [Edge<UIColor>] in
             let width = Double(size.width)
             let height = Double(size.height)
             let edges = FortunesAlgorithm.run(sites: sites, clipArea: .sizeXY(x: width, y: height), options: [.calculateCellPolygons])

@@ -9,7 +9,7 @@
 class FortuneSite {
     public let point: VPoint
         
-    var neighbors: [FortuneSite] = []
+    var neighbors: [FortuneSite] = [] //TODO: try setting the edges between the neighbors when adding a neighbor to prevent a post computation step for the polygons
     
     var publicSite: Any?
     

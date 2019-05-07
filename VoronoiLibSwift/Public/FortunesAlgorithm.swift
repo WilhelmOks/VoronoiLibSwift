@@ -10,7 +10,7 @@
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge] {
+    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] {
         let edges = runMainAlgorithm(sites: sites, clipArea: clipArea).array
         
         let borderEdges: [VEdge]
@@ -91,17 +91,18 @@ private extension FortunesAlgorithm {
         return edges.first { $0.left === site1 && $0.right === site2 || $0.right === site1 && $0.left === site2 }
     }
     
-    static func orderedForPolygon(_ edges: [VEdge]) -> [Edge] {
+    static func orderedForPolygon(_ edges: [VEdge]) -> [Edge<UserData>] {
         guard edges.count > 1 else { return edges.map { Edge($0) } }
         
-        var orderedEdges: [Edge] = [Edge(edges.first!)]
+        var orderedEdges: [Edge<UserData>] = [.init(edges.first!)]
         var unorderedEdges = Array(edges.dropFirst())
         
         while !unorderedEdges.isEmpty {
             let last = orderedEdges.last!
             let foundConnection = unorderedEdges.first { approxEqual($0.start, last.end) || approxEqual($0.end, last.end) }
             if let foundConnection = foundConnection {
-                let edge = approxEqual(last.end, foundConnection.start) ? Edge(start: foundConnection.start, end: foundConnection.end ?? VPoint.zero) : Edge(start: foundConnection.end ?? VPoint.zero, end: foundConnection.start)
+                let swapEnds = !approxEqual(last.end, foundConnection.start)
+                let edge = Edge<UserData>(foundConnection, swappingEnds: swapEnds)
                 orderedEdges.append(edge)
                 unorderedEdges.removeAll { $0 === foundConnection }
             } else {
