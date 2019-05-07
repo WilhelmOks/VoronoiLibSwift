@@ -75,12 +75,13 @@ private extension FortunesAlgorithm {
     
     static func addPolygons(to sites: [Site<UserData>], from edges: [VEdge]) {
         for site in sites {
-            var polygonEdges: [VEdge] = []
+            /*var polygonEdges: [VEdge] = []
             for neighbor in site.fortuneSite.neighbors {
                 if let edge = findEdge(in: edges, between: site.fortuneSite, and: neighbor) {
                     polygonEdges.append(edge)
                 }
-            }
+            }*/
+            let polygonEdges = site.fortuneSite.cellEdges
             
             let orderedPolygonEdges = orderedForPolygon(polygonEdges)
             site.cellPolygonVertices = orderedPolygonEdges.map { $0.start }

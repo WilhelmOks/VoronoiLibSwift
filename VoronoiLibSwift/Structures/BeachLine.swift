@@ -126,8 +126,8 @@ final class BeachLine {
             rightSection?.data.edge = rightEdge
         
             //store neighbors for delaunay
-            leftSection?.data.site.neighbors.append(newSection.data.site)
-            newSection.data.site.neighbors.append(leftSection!.data.site)
+            leftSection?.data.site.addNeighbor(site: newSection.data.site, edge: leftEdge)
+            newSection.data.site.addNeighbor(site: leftSection!.data.site, edge: leftEdge)
         
             //create circle events
             BeachLine.checkCircle(section: leftSection!, eventQueue: eventQueue)
@@ -147,8 +147,8 @@ final class BeachLine {
             newEdge.neighbor = infEdge
             edges.addFirst(newEdge)
         
-            leftSection?.data.site.neighbors.append(newSection.data.site)
-            newSection.data.site.neighbors.append(leftSection!.data.site)
+            leftSection?.data.site.addNeighbor(site: newSection.data.site, edge: newEdge)
+            newSection.data.site.addNeighbor(site: leftSection!.data.site, edge: newEdge)
         
             newSection.data.edge = newEdge
         
@@ -200,11 +200,11 @@ final class BeachLine {
             edges.addFirst(rightSection!.data.edge!)
         
             //add neighbors for delaunay
-            newSection.data.site.neighbors.append(leftSection!.data.site)
-            leftSection!.data.site.neighbors.append(newSection.data.site)
+            newSection.data.site.addNeighbor(site: leftSection!.data.site, edge: newSection.data.edge!)
+            leftSection!.data.site.addNeighbor(site: newSection.data.site, edge: leftSection!.data.edge!)
         
-            newSection.data.site.neighbors.append(rightSection!.data.site)
-            rightSection!.data.site.neighbors.append(newSection.data.site)
+            newSection.data.site.addNeighbor(site: rightSection!.data.site, edge: newSection.data.edge!)
+            rightSection!.data.site.addNeighbor(site: newSection.data.site, edge: rightSection!.data.edge!)
         
             BeachLine.checkCircle(section: leftSection!, eventQueue: eventQueue)
             BeachLine.checkCircle(section: rightSection!, eventQueue: eventQueue)
@@ -265,8 +265,8 @@ final class BeachLine {
         edges.addFirst(newEdge)
     
         //add neighbors for delaunay
-        prev.data.site.neighbors.append(next.data.site)
-        next.data.site.neighbors.append(prev.data.site)
+        prev.data.site.addNeighbor(site: next.data.site, edge: newEdge)
+        next.data.site.addNeighbor(site: prev.data.site, edge: newEdge)
     
         //remove the sectionfrom the tree
         beachLine.removeNode(section)
