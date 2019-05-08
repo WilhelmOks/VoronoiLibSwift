@@ -89,9 +89,10 @@ private extension FortunesAlgorithm {
         }
     }
     
+    /*
     static func findEdge(in edges: [VEdge], between site1: FortuneSite, and site2: FortuneSite) -> VEdge? {
         return edges.first { $0.left === site1 && $0.right === site2 || $0.right === site1 && $0.left === site2 }
-    }
+    }*/
     
     static func orderedForPolygon(_ edges: [VEdge]) -> [Edge<UserData>] {
         guard edges.count > 1 else { return edges.map { Edge($0) } }
@@ -127,7 +128,6 @@ private extension FortunesAlgorithm {
 //MARK: - main algorithm
 private extension FortunesAlgorithm {
     static func runMainAlgorithm(sites: [Site<UserData>], borderPoints: inout [ClipAreaBorderPoint], clipArea: Rect) -> LinkedList<VEdge> {
-        let (minX, minY, maxX, maxY) = clipArea.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
@@ -156,7 +156,7 @@ private extension FortunesAlgorithm {
         var edgesToRemove: [VEdge] = []
         //clip edges
         for edge in edges.array {
-            let valid: Bool = clipEdge(edge: edge, borderPoints: &borderPoints, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            let valid: Bool = clipEdge(edge: edge, borderPoints: &borderPoints, clipArea: clipArea)
             if !valid {
                 edgesToRemove.append(edge)
             }
@@ -167,16 +167,18 @@ private extension FortunesAlgorithm {
     }
     
     //combination of personal ray clipping alg and cohen sutherland
-    static func clipEdge(edge: VEdge, borderPoints: inout [ClipAreaBorderPoint], minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
+    static func clipEdge(edge: VEdge, borderPoints: inout [ClipAreaBorderPoint], clipArea: Rect) -> Bool {
+        let (minX, minY, maxX, maxY) = clipArea.double4
+        
         var accept = false
     
         //if its a ray
         if edge.end == nil {
-            accept = clipRay(edge: edge, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            accept = clipRay(edge: edge, clipArea: clipArea)
         } else {
             //Cohen–Sutherland
-            var start = computeOutCode(x: edge.start.x, y: edge.start.y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
-            var end = computeOutCode(x: edge.end!.x, y: edge.end!.y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            var start = computeOutCode(x: edge.start.x, y: edge.start.y, clipArea: clipArea)
+            var end = computeOutCode(x: edge.end!.x, y: edge.end!.y, clipArea: clipArea)
         
             while true {
                 if (start | end) == 0 {
@@ -211,17 +213,17 @@ private extension FortunesAlgorithm {
                 
                 if outcode == start {
                     edge.start = borderPoint
-                    start = computeOutCode(x: x, y: y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+                    start = computeOutCode(x: x, y: y, clipArea: clipArea)
                 } else {
                     edge.end = borderPoint
-                    end = computeOutCode(x: x, y: y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+                    end = computeOutCode(x: x, y: y, clipArea: clipArea)
                 }
             }
         }
         //if we have a neighbor
         if let neighbor = edge.neighbor {
             //check it
-            let valid = clipEdge(edge: neighbor, borderPoints: &borderPoints, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            let valid = clipEdge(edge: neighbor, borderPoints: &borderPoints, clipArea: clipArea)
             //both are valid
             if accept && valid {
                 if let neighborEnd = neighbor.end {
@@ -241,7 +243,9 @@ private extension FortunesAlgorithm {
         return accept
     }
     
-    static func computeOutCode(x: Double, y: Double, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Int {
+    static func computeOutCode(x: Double, y: Double, clipArea: Rect) -> Int {
+        let (minX, minY, maxX, maxY) = clipArea.double4
+        
         var code: Int = 0
         if ParabolaMath.approxEqual(x, minX) || ParabolaMath.approxEqual(x, maxX) {
             
@@ -261,7 +265,9 @@ private extension FortunesAlgorithm {
         return code
     }
     
-    static func clipRay(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
+    static func clipRay(edge: VEdge, clipArea: Rect) -> Bool {
+        let (minX, minY, maxX, maxY) = clipArea.double4
+        
         let start = edge.start
         //horizontal ray
         if ParabolaMath.approxZero(edge.slopeRise) {
