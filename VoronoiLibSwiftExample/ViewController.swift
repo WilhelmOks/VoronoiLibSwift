@@ -12,6 +12,9 @@ import VoronoiLib
 class ViewController: UIViewController {
     let fortunesAlgorithmStopWatch = StopWatch(name: "FortunesAlgorithm")
     
+    let randomForPoints = Random(mode: .randomlySeeded)
+    let randomForColors = Random(mode: .randomlySeeded)
+    
     var renderView: RenderView {
         return view as! RenderView
     }
@@ -25,6 +28,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(hue: 0.35, saturation: 0.05, brightness: 0.99, alpha: 1)
+        
+        //Random.setGlobalSeed(42)
         
         makeNewVoronoi(ofSize: renderAreaSize)
         
@@ -48,7 +53,7 @@ class ViewController: UIViewController {
     }
     
     private func makeSites(forViewSize size: CGSize) -> [Site<UIColor>] {
-        let numberOfSites = 50
+        let numberOfSites = 300
         var sites: [Site<UIColor>] = []
         
         for _ in 0..<numberOfSites {
@@ -62,6 +67,8 @@ class ViewController: UIViewController {
     }
     
     private func makeNewVoronoi(ofSize size: CGSize) {
+        //Random.setGlobalSeed(42)
+        
         let sites = makeSites(forViewSize: size)
         renderView.sites = sites
         
@@ -79,16 +86,16 @@ class ViewController: UIViewController {
     
     private func randomPointInArea(withSize size: CGSize) -> SIMD2<Double> {
         let randomPoint = (
-            x: Double(arc4random()) / Double(UInt32.max) * Double(size.width),
-            y: Double(arc4random()) / Double(UInt32.max) * Double(size.height))
+            x: randomForPoints.nextUnitDouble() * Double(size.width),
+            y: randomForPoints.nextUnitDouble() * Double(size.height))
         return SIMD2(
             x: randomPoint.x,
             y: randomPoint.y)
     }
     
     private func randomColor() -> UIColor {
-        let hue = CGFloat(arc4random())/CGFloat(UInt32.max) * 0.2 + 0.5
-        return UIColor(hue: hue, saturation: 0.7, brightness: 0.9, alpha: 1)
+        let hue = randomForColors.nextUnitDouble() * 0.2 + 0.5
+        return UIColor(hue: CGFloat(hue), saturation: 0.7, brightness: 0.9, alpha: 1)
     }
 }
 

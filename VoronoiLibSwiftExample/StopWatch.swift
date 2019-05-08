@@ -18,9 +18,9 @@ final class StopWatch {
     }
     
     func run<T>(_ action: () -> T, completion: (_ result: T, _ runTime: TimeInterval) -> ()) {
-        let startedAt = Date()
+        let startedAt = DispatchTime.now()
         let result = action()
-        let runTime = -startedAt.timeIntervalSinceNow
+        let runTime = TimeInterval(DispatchTime.now().uptimeNanoseconds - startedAt.uptimeNanoseconds) / 1_000_000_000
         runTimeHistory.append(runTime)
         runTimeSum += runTime
         completion(result, runTime)
