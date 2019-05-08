@@ -29,6 +29,7 @@
 		FF5B14DA2275E1C1006C0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14D92275E1C1006C0F4D /* Assets.xcassets */; };
 		FF5B14DD2275E1C1006C0F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14DB2275E1C1006C0F4D /* LaunchScreen.storyboard */; };
 		FFCD74D5227DB31700061146 /* VPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74D4227DB31700061146 /* VPoint.swift */; };
+		FFE6226C228363A40018262F /* ClipAreaBorderPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE6226B228363A40018262F /* ClipAreaBorderPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		FF5B14DC2275E1C1006C0F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF5B14DE2275E1C1006C0F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFCD74D4227DB31700061146 /* VPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPoint.swift; sourceTree = "<group>"; };
+		FFE6226B228363A40018262F /* ClipAreaBorderPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipAreaBorderPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				FF1CA0B8226A7472002089F3 /* BeachLine.swift */,
+				FFE6226B228363A40018262F /* ClipAreaBorderPoint.swift */,
 				FF1CA0B6226A7283002089F3 /* FortuneCircleEvent.swift */,
 				FF1CA0B4226A6E5F002089F3 /* FortuneEvent.swift */,
 				FF359015227DE7C100C6432C /* FortuneSite.swift */,
@@ -369,6 +372,7 @@
 				FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */,
 				FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */,
 				FF1CA12E226C8AE0002089F3 /* LinkedList.swift in Sources */,
+				FFE6226C228363A40018262F /* ClipAreaBorderPoint.swift in Sources */,
 				FF1CA130226C8AE0002089F3 /* FortunesAlgorithm.swift in Sources */,
 				FF1CA124226C8AE0002089F3 /* BeachLine.swift in Sources */,
 			);

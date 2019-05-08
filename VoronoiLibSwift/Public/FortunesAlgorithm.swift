@@ -11,11 +11,13 @@ public final class FortunesAlgorithm<UserData> {
     private init() {}
     
     public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] {
-        let edges = runMainAlgorithm(sites: sites, clipArea: clipArea).array
+        var borderPoints: [ClipAreaBorderPoint] = []
+        
+        let edges = runMainAlgorithm(sites: sites, borderPoints: &borderPoints, clipArea: clipArea).array
         
         let borderEdges: [VEdge]
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
-            borderEdges = makeEdgesOnClipAreaBorders()
+            borderEdges = makeEdgesOnClipAreaBorders(borderPoints)
         } else {
             borderEdges = []
         }
@@ -68,7 +70,7 @@ public extension FortunesAlgorithm {
 
 //MARK: - polygon calculation
 private extension FortunesAlgorithm {
-    static func makeEdgesOnClipAreaBorders() -> [VEdge] {
+    static func makeEdgesOnClipAreaBorders(_ borderPoints: [ClipAreaBorderPoint]) -> [VEdge] {
         return [] //TODO: ...
     }
     
@@ -124,7 +126,7 @@ private extension FortunesAlgorithm {
 
 //MARK: - main algorithm
 private extension FortunesAlgorithm {
-    static func runMainAlgorithm(sites: [Site<UserData>], clipArea: Rect) -> LinkedList<VEdge> {
+    static func runMainAlgorithm(sites: [Site<UserData>], borderPoints: inout [ClipAreaBorderPoint], clipArea: Rect) -> LinkedList<VEdge> {
         let (minX, minY, maxX, maxY) = clipArea.double4
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
@@ -143,7 +145,7 @@ private extension FortunesAlgorithm {
             if fEvent is FortuneSiteEvent {
                 beachLine.addBeachSection(siteEvent: fEvent as! FortuneSiteEvent, eventQueue: eventQueue, deleted: deleted, edges: edges)
             } else {
-                if (deleted.contains(fEvent as! FortuneCircleEvent)) {
+                if deleted.contains(fEvent as! FortuneCircleEvent) {
                     deleted.remove(fEvent as! FortuneCircleEvent)
                 } else {
                     beachLine.removeBeachSection(circle: fEvent as! FortuneCircleEvent, eventQueue: eventQueue, deleted: deleted, edges: edges)
@@ -154,7 +156,7 @@ private extension FortunesAlgorithm {
         var edgesToRemove: [VEdge] = []
         //clip edges
         for edge in edges.array {
-            let valid: Bool = clipEdge(edge: edge, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            let valid: Bool = clipEdge(edge: edge, borderPoints: &borderPoints, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
             if !valid {
                 edgesToRemove.append(edge)
             }
@@ -165,7 +167,7 @@ private extension FortunesAlgorithm {
     }
     
     //combination of personal ray clipping alg and cohen sutherland
-    static func clipEdge(edge: VEdge, minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
+    static func clipEdge(edge: VEdge, borderPoints: inout [ClipAreaBorderPoint], minX: Double, minY: Double, maxX: Double, maxY: Double) -> Bool {
         var accept = false
     
         //if its a ray
@@ -203,11 +205,15 @@ private extension FortunesAlgorithm {
                     x = minX
                 }
     
+                let borderPoint = VPoint(x: x, y: y)
+                borderPoints.append(.init(point: borderPoint, site: edge.left))
+                borderPoints.append(.init(point: borderPoint, site: edge.right))
+                
                 if outcode == start {
-                    edge.start = VPoint(x: x, y: y)
+                    edge.start = borderPoint
                     start = computeOutCode(x: x, y: y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
                 } else {
-                    edge.end = VPoint(x: x, y: y)
+                    edge.end = borderPoint
                     end = computeOutCode(x: x, y: y, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
                 }
             }
@@ -215,7 +221,7 @@ private extension FortunesAlgorithm {
         //if we have a neighbor
         if let neighbor = edge.neighbor {
             //check it
-            let valid = clipEdge(edge: neighbor, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
+            let valid = clipEdge(edge: neighbor, borderPoints: &borderPoints, minX: minX, minY: minY, maxX: maxX, maxY: maxY)
             //both are valid
             if accept && valid {
                 if let neighborEnd = neighbor.end {
