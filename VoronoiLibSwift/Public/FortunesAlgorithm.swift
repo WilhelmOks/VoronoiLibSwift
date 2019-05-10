@@ -11,13 +11,16 @@ public final class FortunesAlgorithm<UserData> {
     private init() {}
     
     public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] {
-        var borderPoints: [ClipAreaBorderPoint] = []
+        let borderInfo = ClipAreaBorderInfo()
+        if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
+            borderInfo.enabled = true
+        }
         
-        let edges = runMainAlgorithm(sites: sites, borderPoints: &borderPoints, clipArea: clipArea).array
+        let edges = runMainAlgorithm(sites: sites, borderInfo: borderInfo, clipArea: clipArea).array
         
         let borderEdges: [VEdge]
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
-            borderEdges = makeEdgesOnClipAreaBorders(borderPoints)
+            borderEdges = makeEdgesOnClipAreaBorders(borderInfo)
         } else {
             borderEdges = []
         }
@@ -68,9 +71,21 @@ public extension FortunesAlgorithm {
     }
 }
 
+class ClipAreaBorderInfo {
+    var sites: Set<FortuneSite> = []
+    var enabled = false
+    
+    func add(point: VPoint, site: FortuneSite) {
+        if enabled {
+            sites.insert(site)
+            site.borderPoints.insert(point)
+        }
+    }
+}
+
 //MARK: - polygon calculation
 private extension FortunesAlgorithm {
-    static func makeEdgesOnClipAreaBorders(_ borderPoints: [ClipAreaBorderPoint]) -> [VEdge] {
+    static func makeEdgesOnClipAreaBorders(_ borderInfo: ClipAreaBorderInfo) -> [VEdge] {
         return [] //TODO: ...
     }
     
@@ -127,7 +142,7 @@ private extension FortunesAlgorithm {
 
 //MARK: - main algorithm
 private extension FortunesAlgorithm {
-    static func runMainAlgorithm(sites: [Site<UserData>], borderPoints: inout [ClipAreaBorderPoint], clipArea: Rect) -> LinkedList<VEdge> {
+    static func runMainAlgorithm(sites: [Site<UserData>], borderInfo: ClipAreaBorderInfo, clipArea: Rect) -> LinkedList<VEdge> {
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
@@ -156,7 +171,7 @@ private extension FortunesAlgorithm {
         var edgesToRemove: [VEdge] = []
         //clip edges
         for edge in edges.array {
-            let valid: Bool = clipEdge(edge: edge, borderPoints: &borderPoints, clipArea: clipArea)
+            let valid: Bool = clipEdge(edge: edge, borderInfo: borderInfo, clipArea: clipArea)
             if !valid {
                 edgesToRemove.append(edge)
             }
@@ -167,7 +182,7 @@ private extension FortunesAlgorithm {
     }
     
     //combination of personal ray clipping alg and cohen sutherland
-    static func clipEdge(edge: VEdge, borderPoints: inout [ClipAreaBorderPoint], clipArea: Rect) -> Bool {
+    static func clipEdge(edge: VEdge, borderInfo: ClipAreaBorderInfo, clipArea: Rect) -> Bool {
         let (minX, minY, maxX, maxY) = clipArea.double4
         
         var accept = false
@@ -206,10 +221,10 @@ private extension FortunesAlgorithm {
                     y = edge.start.y + (edge.end!.y - edge.start.y)*(minX - edge.start.x)/(edge.end!.x - edge.start.x)
                     x = minX
                 }
-    
+                
                 let borderPoint = VPoint(x: x, y: y)
-                borderPoints.append(.init(point: borderPoint, site: edge.left))
-                borderPoints.append(.init(point: borderPoint, site: edge.right))
+                borderInfo.add(point: borderPoint, site: edge.left)
+                borderInfo.add(point: borderPoint, site: edge.right)
                 
                 if outcode == start {
                     edge.start = borderPoint
@@ -223,7 +238,7 @@ private extension FortunesAlgorithm {
         //if we have a neighbor
         if let neighbor = edge.neighbor {
             //check it
-            let valid = clipEdge(edge: neighbor, borderPoints: &borderPoints, clipArea: clipArea)
+            let valid = clipEdge(edge: neighbor, borderInfo: borderInfo, clipArea: clipArea)
             //both are valid
             if accept && valid {
                 if let neighborEnd = neighbor.end {
