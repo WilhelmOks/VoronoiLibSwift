@@ -30,7 +30,7 @@ public final class Edge<UserData> {
         let end = swappingEnds ? vStart : vEnd
         
         let siteA = vEdge.left.publicSite as! Site<UserData>
-        let siteB = vEdge.right.publicSite as? Site<UserData>
+        let siteB: Site<UserData>? = vEdge.right === vEdge.left ? nil : vEdge.right.publicSite as? Site<UserData>
         
         self.init(start: start, end: end, siteA: siteA, siteB: siteB)
     }

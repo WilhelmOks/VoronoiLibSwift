@@ -7,7 +7,7 @@
 //
 
 class FortuneSite {
-    public let point: VPoint
+    let point: VPoint
         
     private(set) var neighbors: [FortuneSite] = []
     private(set) var cellEdges: [VEdge] = []
@@ -23,6 +23,10 @@ class FortuneSite {
     
     func addNeighbor(site: FortuneSite, edge: VEdge) {
         neighbors.append(site)
+        cellEdges.append(edge)
+    }
+    
+    func addBorderCellEdge(_ edge: VEdge) {
         cellEdges.append(edge)
     }
 }

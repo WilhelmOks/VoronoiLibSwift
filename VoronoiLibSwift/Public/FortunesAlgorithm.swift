@@ -6,21 +6,25 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
+import simd
+
 //MARK: - public interface
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] {
+    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] { //TODO: test what happens if two sites have qual points
         let borderInfo = ClipAreaBorderInfo()
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
             borderInfo.enabled = true
         }
         
-        let edges = runMainAlgorithm(sites: sites, borderInfo: borderInfo, clipArea: clipArea).array
+        let rect = clipArea.double4
+        
+        let edges = runMainAlgorithm(sites: sites, borderInfo: borderInfo, on: rect).array
         
         let borderEdges: [VEdge]
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
-            borderEdges = makeEdgesOnClipAreaBorders(borderInfo)
+            borderEdges = makeBorderEdges(from: borderInfo, on: rect)
         } else {
             borderEdges = []
         }
@@ -42,7 +46,7 @@ public final class FortunesAlgorithm<UserData> {
 
 //MARK: - options
 public extension FortunesAlgorithm {
-    enum Rect {
+    enum Rect { //TODO: move to somewhere else, so it is not inside of FortunesAlgorithm<UserData>
         case minMaxXY(minX: Double, minY: Double, maxX: Double, maxY: Double)
         case minMaxSimd(min: SIMD2<Double>, max: SIMD2<Double>)
         case rangeXY(x: ClosedRange<Double>, y: ClosedRange<Double>)
@@ -65,11 +69,13 @@ public extension FortunesAlgorithm {
         }
     }
     
-    enum Option {
+    enum Option { //TODO: move to somewhere else, so it is not inside of FortunesAlgorithm<UserData>
         case edgesAlsoOnClipAreaBorders
         case calculateCellPolygons
     }
 }
+
+fileprivate typealias Double4 = (minX: Double, minY: Double, maxX: Double, maxY: Double)
 
 class ClipAreaBorderInfo {
     var sites: Set<FortuneSite> = []
@@ -83,12 +89,52 @@ class ClipAreaBorderInfo {
     }
 }
 
-//MARK: - polygon calculation
+enum ClipAreaBorder {
+    case left
+    case right
+    case top
+    case bottom
+}
+
+//MARK: - border edge calculation
 private extension FortunesAlgorithm {
-    static func makeEdgesOnClipAreaBorders(_ borderInfo: ClipAreaBorderInfo) -> [VEdge] {
-        return [] //TODO: ...
+    static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
+        var edges: [VEdge] = []
+        for site in borderInfo.sites {
+            var pointsForBorders: [ClipAreaBorder: [VPoint]] = [.left: [], .right: [], .top: [], .bottom: []]
+            
+            for point in site.borderPoints {
+                if let border = border(for: point, on: clipRect) {
+                    pointsForBorders[border]!.append(point)
+                } else {
+                    assertionFailure("Couldn't find a border for the point \(point)")
+                }
+            }
+            for (_, points) in pointsForBorders {
+                if points.count == 2 {
+                    let edge = VEdge.init(start: points.first!, left: site, right: site)
+                    edge.end = points.last!
+                    site.addBorderCellEdge(edge)
+                    edges.append(edge)
+                }
+            }
+        }
+        return edges
     }
     
+    static func border(for point: VPoint, on clipRect: Double4) -> ClipAreaBorder? {
+        switch (point.x, point.y) {
+        case (clipRect.minX, _): return .left
+        case (clipRect.maxX, _): return .right
+        case (_, clipRect.minY): return .top
+        case (_, clipRect.maxY): return .bottom
+        default:                 return nil
+        }
+    }
+}
+
+//MARK: - polygon calculation
+private extension FortunesAlgorithm {
     static func addPolygons(to sites: [Site<UserData>]) {
         for site in sites {
             /*var polygonEdges: [VEdge] = []
@@ -142,7 +188,7 @@ private extension FortunesAlgorithm {
 
 //MARK: - main algorithm
 private extension FortunesAlgorithm {
-    static func runMainAlgorithm(sites: [Site<UserData>], borderInfo: ClipAreaBorderInfo, clipArea: Rect) -> LinkedList<VEdge> {
+    static func runMainAlgorithm(sites: [Site<UserData>], borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> LinkedList<VEdge> {
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
@@ -171,7 +217,7 @@ private extension FortunesAlgorithm {
         var edgesToRemove: [VEdge] = []
         //clip edges
         for edge in edges.array {
-            let valid: Bool = clipEdge(edge: edge, borderInfo: borderInfo, clipArea: clipArea)
+            let valid: Bool = clipEdge(edge: edge, borderInfo: borderInfo, clipRect: clipRect)
             if !valid {
                 edgesToRemove.append(edge)
             }
@@ -182,18 +228,18 @@ private extension FortunesAlgorithm {
     }
     
     //combination of personal ray clipping alg and cohen sutherland
-    static func clipEdge(edge: VEdge, borderInfo: ClipAreaBorderInfo, clipArea: Rect) -> Bool {
-        let (minX, minY, maxX, maxY) = clipArea.double4
+    static func clipEdge(edge: VEdge, borderInfo: ClipAreaBorderInfo, clipRect: Double4) -> Bool {
+        let (minX, minY, maxX, maxY) = clipRect
         
         var accept = false
     
         //if its a ray
         if edge.end == nil {
-            accept = clipRay(edge: edge, clipArea: clipArea)
+            accept = clipRay(edge: edge, borderInfo: borderInfo, clipRect: clipRect)
         } else {
             //Cohen–Sutherland
-            var start = computeOutCode(x: edge.start.x, y: edge.start.y, clipArea: clipArea)
-            var end = computeOutCode(x: edge.end!.x, y: edge.end!.y, clipArea: clipArea)
+            var start = computeOutCode(x: edge.start.x, y: edge.start.y, clipRect: clipRect)
+            var end = computeOutCode(x: edge.end!.x, y: edge.end!.y, clipRect: clipRect)
         
             while true {
                 if (start | end) == 0 {
@@ -228,17 +274,17 @@ private extension FortunesAlgorithm {
                 
                 if outcode == start {
                     edge.start = borderPoint
-                    start = computeOutCode(x: x, y: y, clipArea: clipArea)
+                    start = computeOutCode(x: x, y: y, clipRect: clipRect)
                 } else {
                     edge.end = borderPoint
-                    end = computeOutCode(x: x, y: y, clipArea: clipArea)
+                    end = computeOutCode(x: x, y: y, clipRect: clipRect)
                 }
             }
         }
         //if we have a neighbor
         if let neighbor = edge.neighbor {
             //check it
-            let valid = clipEdge(edge: neighbor, borderInfo: borderInfo, clipArea: clipArea)
+            let valid = clipEdge(edge: neighbor, borderInfo: borderInfo, clipRect: clipRect)
             //both are valid
             if accept && valid {
                 if let neighborEnd = neighbor.end {
@@ -258,8 +304,8 @@ private extension FortunesAlgorithm {
         return accept
     }
     
-    static func computeOutCode(x: Double, y: Double, clipArea: Rect) -> Int {
-        let (minX, minY, maxX, maxY) = clipArea.double4
+    static func computeOutCode(x: Double, y: Double, clipRect: Double4) -> Int {
+        let (minX, minY, maxX, maxY) = clipRect
         
         var code: Int = 0
         if ParabolaMath.approxEqual(x, minX) || ParabolaMath.approxEqual(x, maxX) {
@@ -280,8 +326,8 @@ private extension FortunesAlgorithm {
         return code
     }
     
-    static func clipRay(edge: VEdge, clipArea: Rect) -> Bool {
-        let (minX, minY, maxX, maxY) = clipArea.double4
+    static func clipRay(edge: VEdge, borderInfo: ClipAreaBorderInfo, clipRect: Double4) -> Bool {
+        let (minX, minY, maxX, maxY) = clipRect
         
         let start = edge.start
         //horizontal ray
@@ -296,19 +342,19 @@ private extension FortunesAlgorithm {
                 return false
             }
             if within(x: start.x, a: minX, b: maxX) {
-                if edge.slopeRun > 0 {
-                    edge.end = VPoint(x: maxX, y: start.y)
-                } else {
-                    edge.end = VPoint(x: minX, y: start.y)
-                }
+                let edgeEnd = edge.slopeRun > 0 ? VPoint(x: maxX, y: start.y) : VPoint(x: minX, y: start.y)
+                edge.end = edgeEnd
+                borderInfo.add(point: edgeEnd, site: edge.left)
+                borderInfo.add(point: edgeEnd, site: edge.right)
             } else {
-                if edge.slopeRun > 0 {
-                    edge.start = VPoint(x: minX, y: start.y)
-                    edge.end = VPoint(x: maxX, y: start.y)
-                } else {
-                    edge.start = VPoint(x: maxX, y: start.y)
-                    edge.end = VPoint(x: minX, y: start.y)
-                }
+                let edgeStart = edge.slopeRun > 0 ? VPoint(x: minX, y: start.y) : VPoint(x: maxX, y: start.y)
+                let edgeEnd = edge.slopeRun > 0 ? VPoint(x: maxX, y: start.y) : VPoint(x: minX, y: start.y)
+                edge.start = edgeStart
+                edge.end = edgeEnd
+                borderInfo.add(point: edgeStart, site: edge.left)
+                borderInfo.add(point: edgeStart, site: edge.right)
+                borderInfo.add(point: edgeEnd, site: edge.left)
+                borderInfo.add(point: edgeEnd, site: edge.right)
             }
             return true
         }
@@ -324,19 +370,19 @@ private extension FortunesAlgorithm {
                 return false
             }
             if within(x: start.y, a: minY, b: maxY) {
-                if edge.slopeRise > 0 {
-                    edge.end = VPoint(x: start.x, y: maxY)
-                } else {
-                    edge.end = VPoint(x: start.x, y: minY)
-                }
+                let edgeEnd = edge.slopeRise > 0 ? VPoint(x: start.x, y: maxY) : VPoint(x: start.x, y: minY)
+                edge.end = edgeEnd
+                borderInfo.add(point: edgeEnd, site: edge.left)
+                borderInfo.add(point: edgeEnd, site: edge.right)
             } else {
-                if edge.slopeRise > 0 {
-                    edge.start = VPoint(x: start.x, y: minY)
-                    edge.end = VPoint(x: start.x, y: maxY)
-                } else {
-                    edge.start = VPoint(x: start.x, y: maxY)
-                    edge.end = VPoint(x: start.x, y: minY)
-                }
+                let edgeStart = edge.slopeRise > 0 ? VPoint(x: start.x, y: minY) : VPoint(x: start.x, y: maxY)
+                let edgeEnd = edge.slopeRise > 0 ? VPoint(x: start.x, y: maxY) : VPoint(x: start.x, y: minY)
+                edge.start = edgeStart
+                edge.end = edgeEnd
+                borderInfo.add(point: edgeStart, site: edge.left)
+                borderInfo.add(point: edgeStart, site: edge.right)
+                borderInfo.add(point: edgeEnd, site: edge.left)
+                borderInfo.add(point: edgeEnd, site: edge.right)
             }
             return true
         }
@@ -380,22 +426,39 @@ private extension FortunesAlgorithm {
         //if there are two candidates we are outside the closer one is start
         //the further one is the end
         if candidates.count == 2 {
-            let ax = candidates[0].x - start.x
-            let ay = candidates[0].y - start.y
-            let bx = candidates[1].x - start.x
-            let by = candidates[1].y - start.y
+            let candidate0 = candidates[0]
+            let candidate1 = candidates[1]
+            let a = candidate0 - start
+            let b = candidate1 - start
+            /*
+            let ax = candidate0.x - start.x
+            let ay = candidate0.y - start.y
+            let bx = candidate1.x - start.x
+            let by = candidate1.y - start.y
             if ax*ax + ay*ay > bx*bx + by*by {
-                edge.start = candidates[1]
-                edge.end = candidates[0]
+                edge.start = candidate1
+                edge.end = candidate0
             } else {
-                edge.start = candidates[0]
-                edge.end = candidates[1]
-            }
+                edge.start = candidate0
+                edge.end = candidate1
+            }*/
+            let aGraterThanB = simd_length_squared(a) > simd_length_squared(b)
+            let edgeStart = aGraterThanB ? candidate1 : candidate0
+            let edgeEnd = aGraterThanB ? candidate0 : candidate1
+            edge.start = edgeStart
+            edge.end = edgeEnd
+            borderInfo.add(point: edgeStart, site: edge.left)
+            borderInfo.add(point: edgeStart, site: edge.right)
+            borderInfo.add(point: edgeEnd, site: edge.left)
+            borderInfo.add(point: edgeEnd, site: edge.right)
         }
     
         //if there is one candidate we are inside
         if candidates.count == 1 {
-            edge.end = candidates[0]
+            let candidate = candidates[0]
+            edge.end = candidate
+            borderInfo.add(point: candidate, site: edge.left)
+            borderInfo.add(point: candidate, site: edge.right)
         }
     
         //there were no candidates

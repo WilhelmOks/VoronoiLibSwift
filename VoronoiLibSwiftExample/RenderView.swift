@@ -66,6 +66,7 @@ class RenderView : UIView {
             path.move(to: edge.start)
             path.addLine(to: edge.end)
             
+            path.lineWidth = 4
             path.stroke()
         }
     }
