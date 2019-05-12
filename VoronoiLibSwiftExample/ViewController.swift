@@ -12,10 +12,10 @@ import VoronoiLib
 class ViewController: UIViewController {
     let fortunesAlgorithmStopWatch = StopWatch(name: "FortunesAlgorithm")
     
-    let randomForPoints = Random(mode: .randomlySeeded)
+    let randomForPoints = Random(mode: .explicitlySeeded)
     let randomForColors = Random(mode: .randomlySeeded)
     
-    let pointsSeed = 1
+    let pointsSeed = 5
     
     var renderView: RenderView {
         return view as! RenderView
@@ -77,7 +77,8 @@ class ViewController: UIViewController {
         fortunesAlgorithmStopWatch.run({ () -> [Edge<UIColor>] in
             let width = Double(size.width)
             let height = Double(size.height)
-            let edges = FortunesAlgorithm.run(sites: sites, clipArea: .sizeXY(x: width, y: height), options: [.calculateCellPolygons, .edgesAlsoOnClipAreaBorders])
+            let padding = 10.0
+            let edges = FortunesAlgorithm.run(sites: sites, clipArea: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.calculateCellPolygons, .edgesAlsoOnClipAreaBorders])
             return edges
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

@@ -344,17 +344,17 @@ private extension FortunesAlgorithm {
             if within(x: start.x, a: minX, b: maxX) {
                 let edgeEnd = edge.slopeRun > 0 ? VPoint(x: maxX, y: start.y) : VPoint(x: minX, y: start.y)
                 edge.end = edgeEnd
-                borderInfo.add(point: edgeEnd, site: edge.left)
-                borderInfo.add(point: edgeEnd, site: edge.right)
+                //borderInfo.add(point: edgeEnd, site: edge.left)
+                //borderInfo.add(point: edgeEnd, site: edge.right)
             } else {
                 let edgeStart = edge.slopeRun > 0 ? VPoint(x: minX, y: start.y) : VPoint(x: maxX, y: start.y)
                 let edgeEnd = edge.slopeRun > 0 ? VPoint(x: maxX, y: start.y) : VPoint(x: minX, y: start.y)
                 edge.start = edgeStart
                 edge.end = edgeEnd
-                borderInfo.add(point: edgeStart, site: edge.left)
-                borderInfo.add(point: edgeStart, site: edge.right)
-                borderInfo.add(point: edgeEnd, site: edge.left)
-                borderInfo.add(point: edgeEnd, site: edge.right)
+                //borderInfo.add(point: edgeStart, site: edge.left)
+                //borderInfo.add(point: edgeStart, site: edge.right)
+                //borderInfo.add(point: edgeEnd, site: edge.left)
+                //borderInfo.add(point: edgeEnd, site: edge.right)
             }
             return true
         }
@@ -372,17 +372,17 @@ private extension FortunesAlgorithm {
             if within(x: start.y, a: minY, b: maxY) {
                 let edgeEnd = edge.slopeRise > 0 ? VPoint(x: start.x, y: maxY) : VPoint(x: start.x, y: minY)
                 edge.end = edgeEnd
-                borderInfo.add(point: edgeEnd, site: edge.left)
-                borderInfo.add(point: edgeEnd, site: edge.right)
+                //borderInfo.add(point: edgeEnd, site: edge.left)
+                //borderInfo.add(point: edgeEnd, site: edge.right)
             } else {
                 let edgeStart = edge.slopeRise > 0 ? VPoint(x: start.x, y: minY) : VPoint(x: start.x, y: maxY)
                 let edgeEnd = edge.slopeRise > 0 ? VPoint(x: start.x, y: maxY) : VPoint(x: start.x, y: minY)
                 edge.start = edgeStart
                 edge.end = edgeEnd
-                borderInfo.add(point: edgeStart, site: edge.left)
-                borderInfo.add(point: edgeStart, site: edge.right)
-                borderInfo.add(point: edgeEnd, site: edge.left)
-                borderInfo.add(point: edgeEnd, site: edge.right)
+                //borderInfo.add(point: edgeStart, site: edge.left)
+                //borderInfo.add(point: edgeStart, site: edge.right)
+                //borderInfo.add(point: edgeEnd, site: edge.left)
+                //borderInfo.add(point: edgeEnd, site: edge.right)
             }
             return true
         }
@@ -430,27 +430,15 @@ private extension FortunesAlgorithm {
             let candidate1 = candidates[1]
             let a = candidate0 - start
             let b = candidate1 - start
-            /*
-            let ax = candidate0.x - start.x
-            let ay = candidate0.y - start.y
-            let bx = candidate1.x - start.x
-            let by = candidate1.y - start.y
-            if ax*ax + ay*ay > bx*bx + by*by {
-                edge.start = candidate1
-                edge.end = candidate0
-            } else {
-                edge.start = candidate0
-                edge.end = candidate1
-            }*/
             let aGraterThanB = simd_length_squared(a) > simd_length_squared(b)
             let edgeStart = aGraterThanB ? candidate1 : candidate0
             let edgeEnd = aGraterThanB ? candidate0 : candidate1
             edge.start = edgeStart
             edge.end = edgeEnd
-            borderInfo.add(point: edgeStart, site: edge.left)
-            borderInfo.add(point: edgeStart, site: edge.right)
-            borderInfo.add(point: edgeEnd, site: edge.left)
-            borderInfo.add(point: edgeEnd, site: edge.right)
+            //borderInfo.add(point: edgeStart, site: edge.left)
+            //borderInfo.add(point: edgeStart, site: edge.right)
+            //borderInfo.add(point: edgeEnd, site: edge.left)
+            //borderInfo.add(point: edgeEnd, site: edge.right)
         }
     
         //if there is one candidate we are inside
