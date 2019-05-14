@@ -12,7 +12,7 @@ class FortuneSite {
     private(set) var neighbors: [FortuneSite] = []
     private(set) var cellEdges: [VEdge] = []
     
-    var borderPoints: Set<VPoint> = []
+    var borderPoints: Set<VPoint> = [] //TODO: var pointsForBorders: [ClipAreaBorder: [VPoint]] = [.left: [], .right: [], .top: [], .bottom: []]
     
     /// This is actually `Site<UserData>`. `Any` is just eliminating the need to carry the generic type `UserData` in `FortuneSite`.
     var publicSite: Any?
@@ -28,6 +28,10 @@ class FortuneSite {
     
     func addBorderCellEdge(_ edge: VEdge) {
         cellEdges.append(edge)
+    }
+    
+    func removeCellEdge(_ edge: VEdge) {
+        cellEdges.removeAll { $0 === edge }
     }
 }
 

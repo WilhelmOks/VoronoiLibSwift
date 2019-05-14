@@ -12,7 +12,7 @@ import VoronoiLib
 class ViewController: UIViewController {
     let fortunesAlgorithmStopWatch = StopWatch(name: "FortunesAlgorithm")
     
-    let randomForPoints = Random(mode: .explicitlySeeded)
+    let randomForPoints = Random(mode: .randomlySeeded)
     let randomForColors = Random(mode: .randomlySeeded)
     
     let pointsSeed = 5

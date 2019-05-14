@@ -45,11 +45,13 @@ class RenderView : UIView {
         for site in sites {
             let path = UIBezierPath()
             
-            guard site.cellPolygonVertices.count > 2 else { continue }
+            let polygonVerties = site.cellPolygonVertices
             
-            path.move(to: site.cellPolygonVertices.first!.cgPoint)
+            guard polygonVerties.count > 2 else { continue }
             
-            for point in site.cellPolygonVertices.dropFirst() {
+            path.move(to: polygonVerties.first!.cgPoint)
+            
+            for point in polygonVerties.dropFirst() {
                 path.addLine(to: point.cgPoint)
             }
             

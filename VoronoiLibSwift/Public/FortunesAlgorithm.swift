@@ -110,7 +110,8 @@ private extension FortunesAlgorithm {
                     assertionFailure("Couldn't find a border for the point \(point)")
                 }
             }
-            for (_, points) in pointsForBorders {
+            
+            for (border, points) in pointsForBorders {
                 if points.count == 2 {
                     let edge = VEdge.init(start: points.first!, left: site, right: site)
                     edge.end = points.last!
@@ -123,12 +124,16 @@ private extension FortunesAlgorithm {
     }
     
     static func border(for point: VPoint, on clipRect: Double4) -> ClipAreaBorder? {
-        switch (point.x, point.y) {
-        case (clipRect.minX, _): return .left
-        case (clipRect.maxX, _): return .right
-        case (_, clipRect.minY): return .top
-        case (_, clipRect.maxY): return .bottom
-        default:                 return nil
+        if ParabolaMath.approxEqual(point.x, clipRect.minX) {
+            return .left
+        } else if ParabolaMath.approxEqual(point.x, clipRect.maxX) {
+            return .right
+        } else if ParabolaMath.approxEqual(point.y, clipRect.minY) {
+            return .top
+        } else if ParabolaMath.approxEqual(point.y, clipRect.maxY) {
+            return .bottom
+        } else {
+            return nil
         }
     }
 }
@@ -146,6 +151,7 @@ private extension FortunesAlgorithm {
             let polygonEdges = site.fortuneSite.cellEdges
             
             let orderedPolygonEdges = orderedForPolygon(polygonEdges)
+            //assert(orderedPolygonEdges.count == polygonEdges.count, "ordered edges count mismatch")
             site.cellPolygonVertices = orderedPolygonEdges.map { $0.start }
         }
     }
@@ -218,8 +224,19 @@ private extension FortunesAlgorithm {
         //clip edges
         for edge in edges.array {
             let valid: Bool = clipEdge(edge: edge, borderInfo: borderInfo, clipRect: clipRect)
-            if !valid {
+            if valid {
+                if let _ = border(for: edge.start, on: clipRect) {
+                    borderInfo.add(point: edge.start, site: edge.left)
+                    borderInfo.add(point: edge.start, site: edge.right)
+                }
+                if let edgeEnd = edge.end, let _ = border(for: edgeEnd, on: clipRect) {
+                    borderInfo.add(point: edgeEnd, site: edge.left)
+                    borderInfo.add(point: edgeEnd, site: edge.right)
+                }
+            } else {
                 edgesToRemove.append(edge)
+                edge.left.removeCellEdge(edge)
+                edge.right.removeCellEdge(edge)
             }
         }
         edges.removeAll(edgesToRemove) //TODO: test if .filter is faster
@@ -269,8 +286,8 @@ private extension FortunesAlgorithm {
                 }
                 
                 let borderPoint = VPoint(x: x, y: y)
-                borderInfo.add(point: borderPoint, site: edge.left)
-                borderInfo.add(point: borderPoint, site: edge.right)
+                //borderInfo.add(point: borderPoint, site: edge.left)
+                //borderInfo.add(point: borderPoint, site: edge.right)
                 
                 if outcode == start {
                     edge.start = borderPoint
@@ -301,6 +318,7 @@ private extension FortunesAlgorithm {
                 accept = true
             }
         }
+        
         return accept
     }
     
@@ -445,8 +463,8 @@ private extension FortunesAlgorithm {
         if candidates.count == 1 {
             let candidate = candidates[0]
             edge.end = candidate
-            borderInfo.add(point: candidate, site: edge.left)
-            borderInfo.add(point: candidate, site: edge.right)
+            //borderInfo.add(point: candidate, site: edge.left)
+            //borderInfo.add(point: candidate, site: edge.right)
         }
     
         //there were no candidates
