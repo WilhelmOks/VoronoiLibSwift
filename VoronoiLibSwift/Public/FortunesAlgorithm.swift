@@ -119,13 +119,15 @@ private extension FortunesAlgorithm {
         
         var edges: [VEdge] = []
         for site in borderInfo.sites {
-            for (border, points) in site.pointsByBorders {
+            for (_, points) in site.pointsByBorders {
                 if points.count == 2 {
                     let edge = VEdge.init(start: points.first!, left: site, right: site)
                     edge.end = points.last!
                     site.addBorderCellEdge(edge)
                     edges.append(edge)
                 }
+            }
+            for (border, points) in site.pointsByBorders {
                 if points.count == 1 {
                     for neighbor in border.neighbors {
                         let neighborPoints = site.pointsByBorders[neighbor]!
