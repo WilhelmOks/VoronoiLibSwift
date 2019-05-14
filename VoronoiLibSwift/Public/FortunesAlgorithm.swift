@@ -12,7 +12,7 @@ import simd
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] { //TODO: test what happens if two sites have qual points
+    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] { //TODO: test what happens if two sites have equal points
         let borderInfo = ClipAreaBorderInfo()
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
             borderInfo.enabled = true
@@ -81,10 +81,10 @@ class ClipAreaBorderInfo {
     var sites: Set<FortuneSite> = []
     var enabled = false
     
-    func add(point: VPoint, site: FortuneSite) {
+    func add(point: VPoint, forSite site: FortuneSite, onBorder border: ClipAreaBorder) {
         if enabled {
             sites.insert(site)
-            site.borderPoints.insert(point)
+            site.add(point: point, forBorder: border)
         }
     }
 }
@@ -101,17 +101,7 @@ private extension FortunesAlgorithm {
     static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
         var edges: [VEdge] = []
         for site in borderInfo.sites {
-            var pointsForBorders: [ClipAreaBorder: [VPoint]] = [.left: [], .right: [], .top: [], .bottom: []]
-            
-            for point in site.borderPoints {
-                if let border = border(for: point, on: clipRect) {
-                    pointsForBorders[border]!.append(point)
-                } else {
-                    assertionFailure("Couldn't find a border for the point \(point)")
-                }
-            }
-            
-            for (border, points) in pointsForBorders {
+            for (_, points) in site.pointsByBorders {
                 if points.count == 2 {
                     let edge = VEdge.init(start: points.first!, left: site, right: site)
                     edge.end = points.last!
@@ -225,13 +215,13 @@ private extension FortunesAlgorithm {
         for edge in edges.array {
             let valid: Bool = clipEdge(edge: edge, borderInfo: borderInfo, clipRect: clipRect)
             if valid {
-                if let _ = border(for: edge.start, on: clipRect) {
-                    borderInfo.add(point: edge.start, site: edge.left)
-                    borderInfo.add(point: edge.start, site: edge.right)
+                if let border = border(for: edge.start, on: clipRect) {
+                    borderInfo.add(point: edge.start, forSite: edge.left, onBorder: border)
+                    borderInfo.add(point: edge.start, forSite: edge.right, onBorder: border)
                 }
-                if let edgeEnd = edge.end, let _ = border(for: edgeEnd, on: clipRect) {
-                    borderInfo.add(point: edgeEnd, site: edge.left)
-                    borderInfo.add(point: edgeEnd, site: edge.right)
+                if let edgeEnd = edge.end, let border = border(for: edgeEnd, on: clipRect) {
+                    borderInfo.add(point: edgeEnd, forSite: edge.left, onBorder: border)
+                    borderInfo.add(point: edgeEnd, forSite: edge.right, onBorder: border)
                 }
             } else {
                 edgesToRemove.append(edge)
