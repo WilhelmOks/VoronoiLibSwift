@@ -94,19 +94,57 @@ enum ClipAreaBorder {
     case right
     case top
     case bottom
+    
+    var neighbors: [ClipAreaBorder] {
+        switch self {
+        case .left, .right: return [.top, .bottom]
+        case .top, .bottom: return [.left, .right]
+        }
+    }
 }
 
 //MARK: - border edge calculation
 private extension FortunesAlgorithm {
     static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
+        func cornerPoint(borderA: ClipAreaBorder, borderB: ClipAreaBorder) -> VPoint? {
+            let borders: Set<ClipAreaBorder> = [borderA, borderB]
+            switch borders {
+            case [.left,  .top]:    return .init(x: clipRect.minX, y: clipRect.minY)
+            case [.right, .top]:    return .init(x: clipRect.maxX, y: clipRect.minY)
+            case [.left,  .bottom]: return .init(x: clipRect.minX, y: clipRect.maxY)
+            case [.right, .bottom]: return .init(x: clipRect.maxX, y: clipRect.maxY)
+            default: return nil
+            }
+        }
+        
         var edges: [VEdge] = []
         for site in borderInfo.sites {
-            for (_, points) in site.pointsByBorders {
+            for (border, points) in site.pointsByBorders {
                 if points.count == 2 {
                     let edge = VEdge.init(start: points.first!, left: site, right: site)
                     edge.end = points.last!
                     site.addBorderCellEdge(edge)
                     edges.append(edge)
+                }
+                if points.count == 1 {
+                    for neighbor in border.neighbors {
+                        let neighborPoints = site.pointsByBorders[neighbor]!
+                        if neighborPoints.count == 1 {
+                            let corner = cornerPoint(borderA: border, borderB: neighbor)
+                            
+                            let edgeA = VEdge(start: points.first!, left: site, right: site)
+                            edgeA.end = corner
+                            site.addBorderCellEdge(edgeA)
+                            edges.append(edgeA)
+                            
+                            let edgeB = VEdge(start: neighborPoints.first!, left: site, right: site)
+                            edgeB.end = corner
+                            site.addBorderCellEdge(edgeB)
+                            edges.append(edgeB)
+                            break
+                        }
+                    }
+                    break
                 }
             }
         }
