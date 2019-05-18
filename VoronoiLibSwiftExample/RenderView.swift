@@ -62,6 +62,8 @@ class RenderView : UIView {
             path.stroke()
         }
         
+        UIColor.green.set()
+        
         for site in sites {
             let path = UIBezierPath()
             

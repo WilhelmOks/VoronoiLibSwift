@@ -28,6 +28,7 @@
 		FF5B14D82275E1C0006C0F4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14D62275E1C0006C0F4D /* Main.storyboard */; };
 		FF5B14DA2275E1C1006C0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14D92275E1C1006C0F4D /* Assets.xcassets */; };
 		FF5B14DD2275E1C1006C0F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14DB2275E1C1006C0F4D /* LaunchScreen.storyboard */; };
+		FF6A4F952290192F0038AD69 /* SitePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A4F942290192F0038AD69 /* SitePoint.swift */; };
 		FFCD74D5227DB31700061146 /* VPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74D4227DB31700061146 /* VPoint.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		FF5B14D92275E1C1006C0F4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF5B14DC2275E1C1006C0F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF5B14DE2275E1C1006C0F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF6A4F942290192F0038AD69 /* SitePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitePoint.swift; sourceTree = "<group>"; };
 		FFCD74D4227DB31700061146 /* VPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +192,7 @@
 				FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */,
 				FF5396392275EC1800EE14E8 /* Edge.swift */,
 				FF1CA0AC226A574B002089F3 /* Site.swift */,
+				FF6A4F942290192F0038AD69 /* SitePoint.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				FF1CA12A226C8AE0002089F3 /* RBTree.swift in Sources */,
 				FF1CA126226C8AE0002089F3 /* FortuneEvent.swift in Sources */,
 				FF359016227DE7C100C6432C /* FortuneSite.swift in Sources */,
+				FF6A4F952290192F0038AD69 /* SitePoint.swift in Sources */,
 				FF1CA125226C8AE0002089F3 /* FortuneCircleEvent.swift in Sources */,
 				FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */,
 				FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */,

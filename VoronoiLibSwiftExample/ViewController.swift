@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     let pointsSeed = 5
     
-    var sites: [Site<UIColor>] = []
+    var sitePoints: [SitePoint<UIColor>] = []
     
     var renderView: RenderView {
         return view as! RenderView
@@ -68,8 +68,8 @@ class ViewController: UIViewController {
         
         print("tap location: \(location)")
         
-        let site = Site(point: SIMD2<Double>(x: Double(location.x), y: Double(location.y)), userData: randomColor())
-        sites.append(site)
+        let site = SitePoint(point: SIMD2<Double>(x: Double(location.x), y: Double(location.y)), userData: randomColor())
+        sitePoints.append(site)
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
@@ -78,13 +78,13 @@ class ViewController: UIViewController {
         
         Random.setGlobalSeed(pointsSeed)
         
-        sites = []
+        sitePoints = []
         
         for _ in 0..<numberOfSites {
             let point = randomPointInArea(withSize: size)
             let color = randomColor()
             //let color = UIColor.red
-            sites.append(Site(point: point, userData: color))
+            sitePoints.append(SitePoint(point: point, userData: color))
         }
         
         //return sites
@@ -92,18 +92,19 @@ class ViewController: UIViewController {
     
     private func makeNewVoronoi(ofSize size: CGSize) {
         //let sites = makeSites(forViewSize: size)
-        renderView.sites = sites
+        //renderView.sites = sites
         
-        fortunesAlgorithmStopWatch.run({ () -> [Edge<UIColor>] in
+        fortunesAlgorithmStopWatch.run({ () -> (edges: [Edge<UIColor>], sites: [Site<UIColor>]) in
             let width = Double(size.width)
             let height = Double(size.height)
             let padding = 10.0
-            let edges = FortunesAlgorithm.run(sites: sites, clipArea: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.calculateCellPolygons, .edgesAlsoOnClipAreaBorders])
-            return edges
+            let result = FortunesAlgorithm.run(sitePoints: sitePoints, clipArea: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.calculateCellPolygons, .edgesAlsoOnClipAreaBorders])
+            return result
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)
             fortunesAlgorithmStopWatch.printAverageRunTime()
-            renderView.edges = result.map { (start: $0.start.cgPoint, end: $0.end.cgPoint) }
+            renderView.edges = result.edges.map { (start: $0.start.cgPoint, end: $0.end.cgPoint) }
+            renderView.sites = result.sites
         }
     }
     

@@ -12,13 +12,15 @@ import simd
 public final class FortunesAlgorithm<UserData> {
     private init() {}
     
-    public static func run(sites: [Site<UserData>], clipArea: Rect, options: Set<Option>) -> [Edge<UserData>] { //TODO: test what happens if two sites have equal points
+    public static func run(sitePoints: [SitePoint<UserData>], clipArea: Rect, options: Set<Option>) -> (edges: [Edge<UserData>], sites: [Site<UserData>]) { //TODO: test what happens if two sites have equal points
         let borderInfo = ClipAreaBorderInfo()
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
             borderInfo.enabled = true
         }
         
         let rect = clipArea.double4
+        
+        let sites = sitePoints.map { Site(point: $0.point, userData: $0.userData) }
         
         let edges = runMainAlgorithm(sites: sites, borderInfo: borderInfo, on: rect).array
         
@@ -40,7 +42,7 @@ public final class FortunesAlgorithm<UserData> {
             addPolygons(to: sites)
         }
         
-        return resultEdges.map { Edge($0) }
+        return (edges: resultEdges.map { Edge($0) }, sites: sites)
     }
 }
 
