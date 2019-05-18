@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     
     let pointsSeed = 5
     
+    var sites: [Site<UIColor>] = []
+    
     var renderView: RenderView {
         return view as! RenderView
     }
@@ -33,30 +35,50 @@ class ViewController: UIViewController {
         
         Random.setGlobalSeed(pointsSeed)
         
+        makeSites(forViewSize: renderAreaSize)
         makeNewVoronoi(ofSize: renderAreaSize)
         
+        renderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapRenderArea)))
+        renderView.isUserInteractionEnabled = true
+
         //endlessRepeat()
     }
     
     private func endlessRepeat() {
         DispatchQueue.main.asyncAfter(deadline: .now()
             + 0.1) {
+            self.makeSites(forViewSize: self.renderAreaSize)
             self.makeNewVoronoi(ofSize: self.renderAreaSize)
             self.endlessRepeat()
         }
     }
     
     override func viewDidLayoutSubviews() {
+        makeSites(forViewSize: renderAreaSize)
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
     @IBAction func didTapRefreshButton(_ sender: Any) {
+        makeSites(forViewSize: renderAreaSize)
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
-    private func makeSites(forViewSize size: CGSize) -> [Site<UIColor>] {
-        let numberOfSites = 50
-        var sites: [Site<UIColor>] = []
+    @objc private func didTapRenderArea(_ gestureRecognizer: UITapGestureRecognizer) {
+        let location = gestureRecognizer.location(ofTouch: 0, in: renderView)
+        
+        print("tap location: \(location)")
+        
+        let site = Site(point: SIMD2<Double>(x: Double(location.x), y: Double(location.y)), userData: randomColor())
+        sites.append(site)
+        makeNewVoronoi(ofSize: renderAreaSize)
+    }
+    
+    private func makeSites(forViewSize size: CGSize) {
+        let numberOfSites = 10
+        
+        Random.setGlobalSeed(pointsSeed)
+        
+        sites = []
         
         for _ in 0..<numberOfSites {
             let point = randomPointInArea(withSize: size)
@@ -65,13 +87,11 @@ class ViewController: UIViewController {
             sites.append(Site(point: point, userData: color))
         }
         
-        return sites
+        //return sites
     }
     
     private func makeNewVoronoi(ofSize size: CGSize) {
-        Random.setGlobalSeed(pointsSeed)
-        
-        let sites = makeSites(forViewSize: size)
+        //let sites = makeSites(forViewSize: size)
         renderView.sites = sites
         
         fortunesAlgorithmStopWatch.run({ () -> [Edge<UIColor>] in
