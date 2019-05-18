@@ -11,17 +11,8 @@ import UIKit
 import VoronoiLib
 
 class RenderView : UIView {
-    var sites: [Site<UIColor>] = [] {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    var edges: [(start: CGPoint, end: CGPoint)] = [] {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
+    var sites: [Site<UIColor>] = []
+    var edges: [(start: CGPoint, end: CGPoint)] = []
     
     var edgeColor: UIColor = .orange {
         didSet {
@@ -30,8 +21,7 @@ class RenderView : UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        guard !edges.isEmpty else { return }
-        
+        //filled site polygons:
         for site in sites {
             let path = UIBezierPath()
             
@@ -50,8 +40,8 @@ class RenderView : UIView {
             path.fill()
         }
         
+        //edges:
         edgeColor.set()
-        
         for edge in edges {
             let path = UIBezierPath()
             
@@ -62,14 +52,13 @@ class RenderView : UIView {
             path.stroke()
         }
         
+        //site location circles:
         UIColor.green.set()
-        
         for site in sites {
             let path = UIBezierPath()
             
             path.addArc(withCenter: site.point.cgPoint, radius: 1.5, startAngle: 0, endAngle: CGFloat.pi*2, clockwise: false)
             
-            //site.userData?.setFill()
             //edgeColor.set()
             
             path.fill()

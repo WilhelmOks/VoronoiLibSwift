@@ -86,14 +86,9 @@ class ViewController: UIViewController {
             //let color = UIColor.red
             sitePoints.append(SitePoint(point: point, userData: color))
         }
-        
-        //return sites
     }
     
     private func makeNewVoronoi(ofSize size: CGSize) {
-        //let sites = makeSites(forViewSize: size)
-        //renderView.sites = sites
-        
         fortunesAlgorithmStopWatch.run({ () -> (edges: [Edge<UIColor>], sites: [Site<UIColor>]) in
             let width = Double(size.width)
             let height = Double(size.height)
@@ -105,6 +100,7 @@ class ViewController: UIViewController {
             fortunesAlgorithmStopWatch.printAverageRunTime()
             renderView.edges = result.edges.map { (start: $0.start.cgPoint, end: $0.end.cgPoint) }
             renderView.sites = result.sites
+            renderView.setNeedsDisplay()
         }
     }
     
