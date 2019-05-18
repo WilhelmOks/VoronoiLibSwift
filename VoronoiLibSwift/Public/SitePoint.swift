@@ -1,6 +1,6 @@
 //
 //  SitePoint.swift
-//  VoronoiLib
+//  VoronoiLibSwift
 //
 //  Created by Wilhelm Oks on 18.05.19.
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.

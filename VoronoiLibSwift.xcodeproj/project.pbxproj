@@ -29,6 +29,7 @@
 		FF5B14DA2275E1C1006C0F4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14D92275E1C1006C0F4D /* Assets.xcassets */; };
 		FF5B14DD2275E1C1006C0F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14DB2275E1C1006C0F4D /* LaunchScreen.storyboard */; };
 		FF6A4F952290192F0038AD69 /* SitePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A4F942290192F0038AD69 /* SitePoint.swift */; };
+		FF6A4F9722902F320038AD69 /* LineSegmentIntersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */; };
 		FFCD74D5227DB31700061146 /* VPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74D4227DB31700061146 /* VPoint.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		FF5B14DC2275E1C1006C0F4D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF5B14DE2275E1C1006C0F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6A4F942290192F0038AD69 /* SitePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitePoint.swift; sourceTree = "<group>"; };
+		FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSegmentIntersection.swift; sourceTree = "<group>"; };
 		FFCD74D4227DB31700061146 /* VPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +135,7 @@
 				FF5396382275EBE300EE14E8 /* Public */,
 				FF1CA0A5226A3ACE002089F3 /* Structures */,
 				FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */,
+				FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */,
 				FF1CA085226A39FA002089F3 /* AppDelegate.swift */,
 				FF1CA08C226A39FC002089F3 /* Assets.xcassets */,
 				FF1CA08E226A39FC002089F3 /* LaunchScreen.storyboard */,
@@ -362,6 +365,7 @@
 				FF1CA127226C8AE0002089F3 /* Site.swift in Sources */,
 				FF1CA12B226C8AE0002089F3 /* VEdge.swift in Sources */,
 				FF1CA12D226C8AE0002089F3 /* HashSet.swift in Sources */,
+				FF6A4F9722902F320038AD69 /* LineSegmentIntersection.swift in Sources */,
 				FFCD74D5227DB31700061146 /* VPoint.swift in Sources */,
 				FF1CA128226C8AE0002089F3 /* FortuneSiteEvent.swift in Sources */,
 				FF1CA129226C8AE0002089F3 /* MinHeap.swift in Sources */,

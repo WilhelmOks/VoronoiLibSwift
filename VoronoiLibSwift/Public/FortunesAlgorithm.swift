@@ -123,7 +123,7 @@ private extension FortunesAlgorithm {
         for site in borderInfo.sites {
             for (_, points) in site.pointsByBorders {
                 if points.count == 2 {
-                    let edge = VEdge.init(start: points.first!, left: site, right: site)
+                    let edge = VEdge(start: points.first!, left: site, right: site)
                     edge.end = points.last!
                     site.addBorderCellEdge(edge)
                     edges.append(edge)
@@ -167,6 +167,19 @@ private extension FortunesAlgorithm {
         } else {
             return nil
         }
+    }
+    
+    static func edgeIntersects(_ edge: VEdge, line: (VPoint, VPoint)) -> Bool {
+        return LineSegmentIntersection.doIntersect(p: edge.start, p2: edge.end ?? .zero, q: line.0, q2: line.1)
+    }
+    
+    static func anyEdgeIntersects(_ edges: [VEdge], line: (VPoint, VPoint)) -> Bool {
+        for edge in edges {
+            if edgeIntersects(edge, line: line) {
+                return true
+            }
+        }
+        return false
     }
 }
 
