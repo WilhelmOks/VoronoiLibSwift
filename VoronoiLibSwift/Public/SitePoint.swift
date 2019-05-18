@@ -17,3 +17,14 @@ public struct SitePoint<UserData> {
         self.userData = userData
     }
 }
+
+extension SitePoint : Hashable {
+    public static func == (lhs: SitePoint<UserData>, rhs: SitePoint<UserData>) -> Bool {
+        return ParabolaMath.approxEqual(lhs.point.x, rhs.point.x) && ParabolaMath.approxEqual(lhs.point.y, rhs.point.y)
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(point.x)
+        hasher.combine(point.y)
+    }
+}
