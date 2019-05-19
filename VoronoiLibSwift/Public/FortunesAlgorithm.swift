@@ -203,9 +203,22 @@ private extension FortunesAlgorithm {
                 cornersToCheck.formUnion(emptyBorder.corners)
             }
             
+            func safePoint(site: FortuneSite) -> VPoint {
+                let point = site.point
+                if !within(x: point.x, a: clipRect.minX, b: clipRect.maxX) || !within(x: point.y, a: clipRect.minY, b: clipRect.maxY) {
+                    let edge = site.cellEdges.first!
+                    let newPoint = edge.start + ((edge.end! - edge.start) * 0.5)
+                    let offset = (point - newPoint) / 10000000000
+                    return newPoint + offset
+                } else {
+                    return point
+                }
+            }
+            
             for corner in cornersToCheck {
                 let cornerPoint = corner.point(forClipRect: clipRect)
-                let reachable = !anyEdgeIntersects(site.cellEdges, line: (site.point, cornerPoint))
+                let sitePoint = safePoint(site: site)
+                let reachable = !anyEdgeIntersects(site.cellEdges, line: (sitePoint, cornerPoint))
                 if reachable {
                     reachableCornerPoints[corner] = cornerPoint
                 }
