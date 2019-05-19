@@ -97,11 +97,28 @@ enum ClipAreaBorder {
     case top
     case bottom
     
+    static let all: Set<ClipAreaBorder> = [.left, .right, .top, .bottom]
+    
     var neighbors: [ClipAreaBorder] {
         switch self {
         case .left, .right: return [.top, .bottom]
         case .top, .bottom: return [.left, .right]
         }
+    }
+    
+    var corners: Set<ClipAreaCorner> {
+        switch self {
+        case .left: return [.topLeft, .bottomLeft]
+        case .right: return [.topRight, .bottomRight]
+        case .top: return [.topLeft, .topRight]
+        case .bottom: return [.bottomLeft, .bottomRight]
+        }
+    }
+    
+    func oppositeCorner(of corner: ClipAreaCorner) -> ClipAreaCorner? {
+        let corners = self.corners
+        guard corners.contains(corner) else { return nil }
+        return self.corners.subtracting([corner]).first
     }
 }
 
@@ -130,15 +147,20 @@ enum ClipAreaCorner {
         case .bottomRight: return .init(x: clipRect.maxX, y: clipRect.maxY)
         }
     }
+    
+    var borders: [ClipAreaBorder] {
+        switch self {
+        case .topLeft: return [.top, .left]
+        case .topRight: return [.top, .right]
+        case .bottomLeft: return [.bottom, .left]
+        case .bottomRight: return [.bottom, .right]
+        }
+    }
 }
 
 //MARK: - border edge calculation
 private extension FortunesAlgorithm {
     static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
-        func borderCornerPoint(borderA: ClipAreaBorder, borderB: ClipAreaBorder) -> VPoint? {
-            return ClipAreaCorner(borderA: borderA, borderB: borderB)?.point(forClipRect: clipRect)
-        }
-        
         var edges: [VEdge] = []
         for site in borderInfo.sites {
             for (border, points) in site.pointsByBorders {
@@ -149,12 +171,14 @@ private extension FortunesAlgorithm {
                     edges.append(edge)
                 }
             }
+            
+            /*
             for (border, points) in site.pointsByBorders {
                 if points.count == 1 {
                     for neighborBorder in border.neighbors {
                         let neighborPoints = site.pointsByBorders[neighborBorder]!
                         if neighborPoints.count == 1 {
-                            let corner = borderCornerPoint(borderA: border, borderB: neighborBorder)
+                            let corner = ClipAreaCorner(borderA: border, borderB: neighborBorder)?.point(forClipRect: clipRect)
                             
                             let edgeA = VEdge(start: points.first!, left: site, right: site)
                             edgeA.end = corner
@@ -170,8 +194,46 @@ private extension FortunesAlgorithm {
                     }
                     break
                 }
+            }*/
+            
+            var reachableCornerPoints: [ClipAreaCorner: VPoint] = [:]
+            
+            var cornersToCheck: Set<ClipAreaCorner> = []
+            for emptyBorder in site.emptyBorders {
+                cornersToCheck.formUnion(emptyBorder.corners)
+            }
+            
+            for corner in cornersToCheck {
+                let cornerPoint = corner.point(forClipRect: clipRect)
+                let reachable = !anyEdgeIntersects(site.cellEdges, line: (site.point, cornerPoint))
+                if reachable {
+                    reachableCornerPoints[corner] = cornerPoint
+                }
+            }
+            
+            var handledCornerBorders: Set<ClipAreaBorder> = []
+
+            for (reachableCorner, reachablePoint) in reachableCornerPoints {
+                for borderAtCorner in reachableCorner.borders {
+                    if !handledCornerBorders.contains(borderAtCorner) {
+                        if let middlePoint = site.pointsByBorders[borderAtCorner]!.first {
+                            let edge = VEdge(start: middlePoint, left: site, right: site)
+                            edge.end = reachablePoint
+                            site.addBorderCellEdge(edge, border: borderAtCorner)
+                            handledCornerBorders.insert(borderAtCorner)
+                            edges.append(edge)
+                        } else if let otherCornerPoint = reachableCornerPoints[borderAtCorner.oppositeCorner(of: reachableCorner)!] {
+                            let edge = VEdge(start: otherCornerPoint, left: site, right: site)
+                            edge.end = reachablePoint
+                            site.addBorderCellEdge(edge, border: borderAtCorner)
+                            handledCornerBorders.insert(borderAtCorner)
+                            edges.append(edge)
+                        }
+                    }
+                }
             }
         }
+        
         return edges
     }
     
