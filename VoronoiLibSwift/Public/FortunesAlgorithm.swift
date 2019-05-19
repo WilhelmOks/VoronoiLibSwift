@@ -105,45 +105,65 @@ enum ClipAreaBorder {
     }
 }
 
+enum ClipAreaCorner {
+    case topLeft
+    case topRight
+    case bottomLeft
+    case bottomRight
+    
+    init?(borderA: ClipAreaBorder, borderB: ClipAreaBorder) {
+        let borders: Set<ClipAreaBorder> = [borderA, borderB]
+        switch borders {
+        case [.left,  .top]:    self = .topLeft
+        case [.right, .top]:    self = .topRight
+        case [.left,  .bottom]: self = .bottomLeft
+        case [.right, .bottom]: self = .bottomRight
+        default: return nil
+        }
+    }
+    
+    fileprivate func point(forClipRect clipRect: Double4) -> VPoint {
+        switch self {
+        case .topLeft:     return .init(x: clipRect.minX, y: clipRect.minY)
+        case .topRight:    return .init(x: clipRect.maxX, y: clipRect.minY)
+        case .bottomLeft:  return .init(x: clipRect.minX, y: clipRect.maxY)
+        case .bottomRight: return .init(x: clipRect.maxX, y: clipRect.maxY)
+        }
+    }
+}
+
 //MARK: - border edge calculation
 private extension FortunesAlgorithm {
     static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
-        func cornerPoint(borderA: ClipAreaBorder, borderB: ClipAreaBorder) -> VPoint? {
-            let borders: Set<ClipAreaBorder> = [borderA, borderB]
-            switch borders {
-            case [.left,  .top]:    return .init(x: clipRect.minX, y: clipRect.minY)
-            case [.right, .top]:    return .init(x: clipRect.maxX, y: clipRect.minY)
-            case [.left,  .bottom]: return .init(x: clipRect.minX, y: clipRect.maxY)
-            case [.right, .bottom]: return .init(x: clipRect.maxX, y: clipRect.maxY)
-            default: return nil
-            }
+        func borderCornerPoint(borderA: ClipAreaBorder, borderB: ClipAreaBorder) -> VPoint? {
+            return ClipAreaCorner(borderA: borderA, borderB: borderB)?.point(forClipRect: clipRect)
         }
         
         var edges: [VEdge] = []
         for site in borderInfo.sites {
-            for (_, points) in site.pointsByBorders {
+            for (border, points) in site.pointsByBorders {
                 if points.count == 2 {
                     let edge = VEdge(start: points.first!, left: site, right: site)
                     edge.end = points.last!
-                    site.addBorderCellEdge(edge)
+                    site.addBorderCellEdge(edge, border: border)
                     edges.append(edge)
                 }
             }
             for (border, points) in site.pointsByBorders {
                 if points.count == 1 {
-                    for neighbor in border.neighbors {
-                        let neighborPoints = site.pointsByBorders[neighbor]!
+                    for neighborBorder in border.neighbors {
+                        let neighborPoints = site.pointsByBorders[neighborBorder]!
                         if neighborPoints.count == 1 {
-                            let corner = cornerPoint(borderA: border, borderB: neighbor)
+                            let corner = borderCornerPoint(borderA: border, borderB: neighborBorder)
                             
                             let edgeA = VEdge(start: points.first!, left: site, right: site)
                             edgeA.end = corner
-                            site.addBorderCellEdge(edgeA)
+                            site.addBorderCellEdge(edgeA, border: border)
                             edges.append(edgeA)
                             
                             let edgeB = VEdge(start: neighborPoints.first!, left: site, right: site)
                             edgeB.end = corner
-                            site.addBorderCellEdge(edgeB)
+                            site.addBorderCellEdge(edgeB, border: neighborBorder)
                             edges.append(edgeB)
                             break
                         }
