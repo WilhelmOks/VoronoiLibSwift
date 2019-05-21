@@ -93,7 +93,7 @@ class ViewController: UIViewController {
             let width = Double(size.width)
             let height = Double(size.height)
             let padding = 10.0
-            let result = Voronoi.runFortunesAlgorithm(sitePoints: sitePoints, clipRect: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.calculateCellPolygons, .edgesAlsoOnClipAreaBorders])
+            let result = Voronoi.runFortunesAlgorithm(sitePoints: sitePoints, clipRect: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.calculateCellPolygons, .makeEdgesOnClipRectBorders])
             return result
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

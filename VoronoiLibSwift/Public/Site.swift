@@ -19,7 +19,7 @@ public final class Site<UserData> {
         return fortuneSite.neighbors.map { $0.publicSite as! Site<UserData> }
     }
     
-    internal(set) public var cellPolygonVertices: [SIMD2<Double>] = [] //TODO: rename to polygonVertices
+    internal(set) public var polygonVertices: [SIMD2<Double>] = []
     
     internal init(point: SIMD2<Double>, userData: UserData? = nil) {
         self.userData = userData

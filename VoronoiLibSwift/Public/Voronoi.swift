@@ -8,13 +8,13 @@
 
 public enum Voronoi {
     public enum Option {
-        case edgesAlsoOnClipAreaBorders //TODO: rename to makeEdgesOnClipRectBorders
-        case calculateCellPolygons //TODO: rename to makeSitePolygonVertices
+        case makeEdgesOnClipRectBorders
+        case makeSitePolygonVertices
     }
     
     public static func runFortunesAlgorithm<UserData>(sitePoints: [SitePoint<UserData>], clipRect: ClipRect, options: Set<Option>) -> (edges: [Edge<UserData>], sites: [Site<UserData>]) {
         let borderInfo = BorderInfoAggregator()
-        if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
+        if options.contains(.makeEdgesOnClipRectBorders) || options.contains(.makeSitePolygonVertices) {
             borderInfo.enabled = true
         }
         
@@ -27,20 +27,20 @@ public enum Voronoi {
         let edges = FortunesAlgorithm.run(sites: fortuneSites, borderInfo: borderInfo, on: double4).array
         
         let borderEdges: [VEdge]
-        if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
+        if options.contains(.makeEdgesOnClipRectBorders) || options.contains(.makeSitePolygonVertices) {
             borderEdges = ClipBorderEdgeCalculation.makeBorderEdges(from: borderInfo, on: double4, withSites: fortuneSites)
         } else {
             borderEdges = []
         }
         
         let resultEdges: [VEdge]
-        if options.contains(.edgesAlsoOnClipAreaBorders) {
+        if options.contains(.makeEdgesOnClipRectBorders) {
             resultEdges = edges + borderEdges
         } else {
             resultEdges = edges
         }
         
-        if options.contains(.calculateCellPolygons) {
+        if options.contains(.makeSitePolygonVertices) {
             PolygonCalculation.addPolygonVertices(to: sites)
         }
         

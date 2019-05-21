@@ -25,7 +25,7 @@ class RenderView : UIView {
         for site in sites {
             let path = UIBezierPath()
             
-            let polygonVerties = site.cellPolygonVertices
+            let polygonVerties = site.polygonVertices
             
             guard polygonVerties.count > 2 else { continue }
             

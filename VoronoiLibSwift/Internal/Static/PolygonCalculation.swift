@@ -10,7 +10,7 @@ enum PolygonCalculation<UserData> {
     static func addPolygonVertices(to sites: [Site<UserData>]) {
         for site in sites {
             let edges = site.fortuneSite.cellEdges
-            site.cellPolygonVertices = orderedPolygonEdges(from: edges).map { $0.start }
+            site.polygonVertices = orderedPolygonEdges(from: edges).map { $0.start }
         }
     }
     

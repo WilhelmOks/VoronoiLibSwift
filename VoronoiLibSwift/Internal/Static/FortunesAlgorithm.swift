@@ -18,7 +18,7 @@ final class FortunesAlgorithm {
         
         //init tree
         let beachLine = BeachLine()
-        let edges = LinkedList<VEdge>() //TODO: try using Array
+        let edges = LinkedList<VEdge>() //TODO: try using Array as inout
         let deleted = HashSet<FortuneCircleEvent>()
         
         //init edge list
