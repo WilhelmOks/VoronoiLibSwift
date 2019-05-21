@@ -26,7 +26,7 @@ public final class FortunesAlgorithm<UserData> {
         
         let borderEdges: [VEdge]
         if options.contains(.edgesAlsoOnClipAreaBorders) || options.contains(.calculateCellPolygons) {
-            borderEdges = makeBorderEdges(from: borderInfo, on: rect)
+            borderEdges = makeBorderEdges(from: borderInfo, on: rect, withSites: sites)
         } else {
             borderEdges = []
         }
@@ -128,6 +128,8 @@ enum ClipAreaCorner {
     case bottomLeft
     case bottomRight
     
+    static let all: Set<ClipAreaCorner> = [.topLeft, .topRight, .bottomLeft, .bottomRight]
+    
     init?(borderA: ClipAreaBorder, borderB: ClipAreaBorder) {
         let borders: Set<ClipAreaBorder> = [borderA, borderB]
         switch borders {
@@ -160,8 +162,32 @@ enum ClipAreaCorner {
 
 //MARK: - border edge calculation
 private extension FortunesAlgorithm {
-    static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4) -> [VEdge] {
+    static func makeBorderEdges(from borderInfo: ClipAreaBorderInfo, on clipRect: Double4, withSites sites: [Site<UserData>]) -> [VEdge] {
         var edges: [VEdge] = []
+        
+        if borderInfo.sites.isEmpty && !sites.isEmpty {
+            func borderEdge(border: ClipAreaBorder, site: FortuneSite) -> VEdge {
+                let points = border.corners.map { $0.point(forClipRect: clipRect) }
+                let edge = VEdge(start: points.first!, left: site, right: site)
+                edge.end = points.last!
+                return edge
+            }
+            
+            func squaredDistanceToClipRect(_ site: Site<UserData>) -> Double {
+                return ClipAreaCorner.all.map{ simd_distance_squared($0.point(forClipRect: clipRect), site.point) }.min()!
+            }
+            
+            let site = sites.min { squaredDistanceToClipRect($0) < squaredDistanceToClipRect($1) }!
+            
+            for border in ClipAreaBorder.all {
+                let edge = borderEdge(border: border, site: site.fortuneSite)
+                site.fortuneSite.addBorderCellEdge(edge, border: border)
+                edges.append(edge)
+            }
+            
+            return edges
+        }
+        
         for site in borderInfo.sites {
             for (border, points) in site.pointsByBorders {
                 if points.count == 2 {
