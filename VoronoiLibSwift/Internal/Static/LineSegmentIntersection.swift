@@ -6,12 +6,10 @@
 //  Copyright © 2019 Wilhelm Oks. All rights reserved.
 //
 
-public struct LineSegmentIntersection<T : SIMDScalar & FloatingPoint> {
-    private init() {}
+enum LineSegmentIntersection<T : SIMDScalar & FloatingPoint> {
+    typealias Point = SIMD2<T>
     
-    public typealias Point = SIMD2<T>
-    
-    public static func doIntersect(p: Point, p2: Point, q: Point, q2: Point) -> Bool {
+    static func doIntersect(p: Point, p2: Point, q: Point, q2: Point) -> Bool {
         let r = p2 - p
         let s = q2 - q
         
@@ -37,13 +35,7 @@ public struct LineSegmentIntersection<T : SIMDScalar & FloatingPoint> {
         return point1.x * point2.y - point1.y * point2.x
     }
     
-    private static func allEqual(_ arguments: Bool...) -> Bool {
-        let first = arguments.first!
-        for element in arguments.dropFirst() {
-            if element != first {
-                return false
-            }
-        }
-        return true
+    private static func allEqual(_ a: Bool, _ b: Bool, _ c: Bool, _ d: Bool) -> Bool {
+        return a == b && b == c && c == d
     }
 }

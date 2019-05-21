@@ -60,14 +60,14 @@ final class BeachLine {
             }
     
             //the point lies below the left breakpoint
-            if ParabolaMath.approxZero(distanceLeft) {
+            if Approx.approxZero(distanceLeft) {
                 leftSection = node?.previous
                 rightSection = node
                 continue
             }
     
             //the point lies below the right breakpoint
-            if ParabolaMath.approxZero(distanceRight) {
+            if Approx.approxZero(distanceRight) {
                 leftSection = node
                 rightSection = node?.next
                 continue
@@ -223,16 +223,16 @@ final class BeachLine {
         //look left
         var prev = section.previous!
         while prev.data.circleEvent != nil &&
-        ParabolaMath.approxEqual(prev.data.circleEvent!.point.x, x) &&
-            ParabolaMath.approxEqual(prev.data.circleEvent!.point.y, y) {
+        Approx.approxEqual(prev.data.circleEvent!.point.x, x) &&
+            Approx.approxEqual(prev.data.circleEvent!.point.y, y) {
             toBeRemoved.append(prev)
             prev = prev.previous!
         }
     
         var next = section.next!
         while next.data.circleEvent != nil &&
-        ParabolaMath.approxEqual(next.data.circleEvent!.point.x, x) &&
-        ParabolaMath.approxEqual(next.data.circleEvent!.point.y, y) {
+        Approx.approxEqual(next.data.circleEvent!.point.x, x) &&
+        Approx.approxEqual(next.data.circleEvent!.point.y, y) {
             toBeRemoved.append(next)
             next = next.next!
         }
@@ -281,7 +281,7 @@ final class BeachLine {
     private static func leftBreakpoint(node: RBTreeNode<BeachSection>, directrix: Double) -> Double {
         let leftNode = node.previous
         //degenerate parabola
-        if ParabolaMath.approxEqual(node.data.site.point.y, directrix) {
+        if Approx.approxEqual(node.data.site.point.y, directrix) {
             return node.data.site.point.x
         }
         //node is the first piece of the beach line
@@ -289,7 +289,7 @@ final class BeachLine {
             return -Double.infinity
         }
         //left node is degenerate
-        if ParabolaMath.approxEqual(leftNode!.data.site.point.y, directrix) {
+        if Approx.approxEqual(leftNode!.data.site.point.y, directrix) {
             return leftNode!.data.site.point.x
         }
         let site = node.data.site
@@ -300,7 +300,7 @@ final class BeachLine {
     private static func rightBreakpoint(node: RBTreeNode<BeachSection>, directrix: Double) -> Double {
         let rightNode = node.next
         //degenerate parabola
-        if ParabolaMath.approxEqual(node.data.site.point.y, directrix) {
+        if Approx.approxEqual(node.data.site.point.y, directrix) {
             return node.data.site.point.x
         }
         //node is the last piece of the beach line
@@ -308,7 +308,7 @@ final class BeachLine {
             return Double.infinity
         }
         //left node is degenerate
-        if ParabolaMath.approxEqual(rightNode!.data.site.point.y, directrix) {
+        if Approx.approxEqual(rightNode!.data.site.point.y, directrix) {
             return rightNode!.data.site.point.x
         }
         let site = node.data.site
@@ -348,7 +348,7 @@ final class BeachLine {
         //The center beach section can only dissapear when
         //the angle between a and c is negative
         let d = a.x*c.y - a.y*c.x
-        if ParabolaMath.approxGreaterThanOrEqualTo(d, 0) {
+        if Approx.approxGreaterThanOrEqualTo(d, 0) {
             return
         }
     

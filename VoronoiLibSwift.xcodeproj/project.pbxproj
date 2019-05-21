@@ -19,7 +19,7 @@
 		FF1CA12B226C8AE0002089F3 /* VEdge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0A8226A5285002089F3 /* VEdge.swift */; };
 		FF1CA12D226C8AE0002089F3 /* HashSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0BA226B541D002089F3 /* HashSet.swift */; };
 		FF1CA12E226C8AE0002089F3 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0BC226B559B002089F3 /* LinkedList.swift */; };
-		FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */; };
+		FF1CA12F226C8AE0002089F3 /* Approx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0AE226A5A2C002089F3 /* Approx.swift */; };
 		FF1CA130226C8AE0002089F3 /* FortunesAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */; };
 		FF359016227DE7C100C6432C /* FortuneSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF359015227DE7C100C6432C /* FortuneSite.swift */; };
 		FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5396392275EC1800EE14E8 /* Edge.swift */; };
@@ -30,6 +30,13 @@
 		FF5B14DD2275E1C1006C0F4D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5B14DB2275E1C1006C0F4D /* LaunchScreen.storyboard */; };
 		FF6A4F952290192F0038AD69 /* SitePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A4F942290192F0038AD69 /* SitePoint.swift */; };
 		FF6A4F9722902F320038AD69 /* LineSegmentIntersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */; };
+		FFAEDE5822944D060034A1F7 /* ParabolaMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE5722944D060034A1F7 /* ParabolaMath.swift */; };
+		FFAEDE5B229455360034A1F7 /* ClipRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE5A229455360034A1F7 /* ClipRect.swift */; };
+		FFAEDE5D229455BA0034A1F7 /* ClipRectInternal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE5C229455BA0034A1F7 /* ClipRectInternal.swift */; };
+		FFAEDE5F229456CC0034A1F7 /* Voronoi.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE5E229456CC0034A1F7 /* Voronoi.swift */; };
+		FFAEDE6122945DD50034A1F7 /* PolygonCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE6022945DD50034A1F7 /* PolygonCalculation.swift */; };
+		FFAEDE64229462A50034A1F7 /* ClipBorderEdgeCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE63229462A50034A1F7 /* ClipBorderEdgeCalculation.swift */; };
+		FFAEDE66229466F70034A1F7 /* BorderInfoAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAEDE65229466F70034A1F7 /* BorderInfoAggregator.swift */; };
 		FFCD74D5227DB31700061146 /* VPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCD74D4227DB31700061146 /* VPoint.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +61,7 @@
 		FF1CA0A6226A3AF8002089F3 /* RBTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RBTree.swift; sourceTree = "<group>"; };
 		FF1CA0A8226A5285002089F3 /* VEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VEdge.swift; sourceTree = "<group>"; };
 		FF1CA0AC226A574B002089F3 /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
-		FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParabolaMath.swift; sourceTree = "<group>"; };
+		FF1CA0AE226A5A2C002089F3 /* Approx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Approx.swift; sourceTree = "<group>"; };
 		FF1CA0B0226A5FC9002089F3 /* MinHeap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinHeap.swift; sourceTree = "<group>"; };
 		FF1CA0B2226A6DD4002089F3 /* FortuneSiteEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FortuneSiteEvent.swift; sourceTree = "<group>"; };
 		FF1CA0B4226A6E5F002089F3 /* FortuneEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FortuneEvent.swift; sourceTree = "<group>"; };
@@ -79,6 +86,13 @@
 		FF5B14DE2275E1C1006C0F4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF6A4F942290192F0038AD69 /* SitePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitePoint.swift; sourceTree = "<group>"; };
 		FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSegmentIntersection.swift; sourceTree = "<group>"; };
+		FFAEDE5722944D060034A1F7 /* ParabolaMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParabolaMath.swift; sourceTree = "<group>"; };
+		FFAEDE5A229455360034A1F7 /* ClipRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipRect.swift; sourceTree = "<group>"; };
+		FFAEDE5C229455BA0034A1F7 /* ClipRectInternal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipRectInternal.swift; sourceTree = "<group>"; };
+		FFAEDE5E229456CC0034A1F7 /* Voronoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voronoi.swift; sourceTree = "<group>"; };
+		FFAEDE6022945DD50034A1F7 /* PolygonCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonCalculation.swift; sourceTree = "<group>"; };
+		FFAEDE63229462A50034A1F7 /* ClipBorderEdgeCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipBorderEdgeCalculation.swift; sourceTree = "<group>"; };
+		FFAEDE65229466F70034A1F7 /* BorderInfoAggregator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderInfoAggregator.swift; sourceTree = "<group>"; };
 		FFCD74D4227DB31700061146 /* VPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,9 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5396382275EBE300EE14E8 /* Public */,
-				FF1CA0A5226A3ACE002089F3 /* Structures */,
-				FF1CA0AE226A5A2C002089F3 /* ParabolaMath.swift */,
-				FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */,
+				FFAEDE59229454E40034A1F7 /* Internal */,
 				FF1CA085226A39FA002089F3 /* AppDelegate.swift */,
 				FF1CA08C226A39FC002089F3 /* Assets.xcassets */,
 				FF1CA08E226A39FC002089F3 /* LaunchScreen.storyboard */,
@@ -157,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				FF1CA0B8226A7472002089F3 /* BeachLine.swift */,
+				FFAEDE65229466F70034A1F7 /* BorderInfoAggregator.swift */,
 				FF1CA0B6226A7283002089F3 /* FortuneCircleEvent.swift */,
 				FF1CA0B4226A6E5F002089F3 /* FortuneEvent.swift */,
 				FF359015227DE7C100C6432C /* FortuneSite.swift */,
@@ -192,10 +205,11 @@
 		FF5396382275EBE300EE14E8 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */,
+				FFAEDE5E229456CC0034A1F7 /* Voronoi.swift */,
+				FFAEDE5A229455360034A1F7 /* ClipRect.swift */,
 				FF5396392275EC1800EE14E8 /* Edge.swift */,
-				FF1CA0AC226A574B002089F3 /* Site.swift */,
 				FF6A4F942290192F0038AD69 /* SitePoint.swift */,
+				FF1CA0AC226A574B002089F3 /* Site.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -211,6 +225,29 @@
 				FF5B14DE2275E1C1006C0F4D /* Info.plist */,
 			);
 			path = VoronoiLibTestHost;
+			sourceTree = "<group>";
+		};
+		FFAEDE59229454E40034A1F7 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0A5226A3ACE002089F3 /* Structures */,
+				FFAEDE62229462290034A1F7 /* Static */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		FFAEDE62229462290034A1F7 /* Static */ = {
+			isa = PBXGroup;
+			children = (
+				FF1CA0BE226B8B64002089F3 /* FortunesAlgorithm.swift */,
+				FFAEDE6022945DD50034A1F7 /* PolygonCalculation.swift */,
+				FFAEDE63229462A50034A1F7 /* ClipBorderEdgeCalculation.swift */,
+				FFAEDE5C229455BA0034A1F7 /* ClipRectInternal.swift */,
+				FF1CA0AE226A5A2C002089F3 /* Approx.swift */,
+				FFAEDE5722944D060034A1F7 /* ParabolaMath.swift */,
+				FF6A4F9622902F320038AD69 /* LineSegmentIntersection.swift */,
+			);
+			path = Static;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,18 +401,25 @@
 			files = (
 				FF1CA127226C8AE0002089F3 /* Site.swift in Sources */,
 				FF1CA12B226C8AE0002089F3 /* VEdge.swift in Sources */,
+				FFAEDE64229462A50034A1F7 /* ClipBorderEdgeCalculation.swift in Sources */,
 				FF1CA12D226C8AE0002089F3 /* HashSet.swift in Sources */,
 				FF6A4F9722902F320038AD69 /* LineSegmentIntersection.swift in Sources */,
+				FFAEDE5D229455BA0034A1F7 /* ClipRectInternal.swift in Sources */,
 				FFCD74D5227DB31700061146 /* VPoint.swift in Sources */,
+				FFAEDE5B229455360034A1F7 /* ClipRect.swift in Sources */,
 				FF1CA128226C8AE0002089F3 /* FortuneSiteEvent.swift in Sources */,
 				FF1CA129226C8AE0002089F3 /* MinHeap.swift in Sources */,
 				FF1CA12A226C8AE0002089F3 /* RBTree.swift in Sources */,
 				FF1CA126226C8AE0002089F3 /* FortuneEvent.swift in Sources */,
+				FFAEDE5822944D060034A1F7 /* ParabolaMath.swift in Sources */,
 				FF359016227DE7C100C6432C /* FortuneSite.swift in Sources */,
+				FFAEDE66229466F70034A1F7 /* BorderInfoAggregator.swift in Sources */,
+				FFAEDE5F229456CC0034A1F7 /* Voronoi.swift in Sources */,
 				FF6A4F952290192F0038AD69 /* SitePoint.swift in Sources */,
 				FF1CA125226C8AE0002089F3 /* FortuneCircleEvent.swift in Sources */,
+				FFAEDE6122945DD50034A1F7 /* PolygonCalculation.swift in Sources */,
 				FF53963A2275EC1800EE14E8 /* Edge.swift in Sources */,
-				FF1CA12F226C8AE0002089F3 /* ParabolaMath.swift in Sources */,
+				FF1CA12F226C8AE0002089F3 /* Approx.swift in Sources */,
 				FF1CA12E226C8AE0002089F3 /* LinkedList.swift in Sources */,
 				FF1CA130226C8AE0002089F3 /* FortunesAlgorithm.swift in Sources */,
 				FF1CA124226C8AE0002089F3 /* BeachLine.swift in Sources */,

@@ -13,7 +13,7 @@ public final class Edge<UserData> {
     public let siteA: Site<UserData>
     public let siteB: Site<UserData>?
     
-    public var isOnClipAreaBorder: Bool { return siteB == nil }
+    public var isOnClipRectBorder: Bool { return siteB == nil }
     
     private init(start: SIMD2<Double>, end: SIMD2<Double>, siteA: Site<UserData>, siteB: Site<UserData>?) {
         self.start = start
