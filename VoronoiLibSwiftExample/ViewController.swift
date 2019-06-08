@@ -10,6 +10,9 @@ import UIKit
 import VoronoiLib
 
 class ViewController: UIViewController {
+    @IBOutlet weak var bordersBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var polygonsBarButtonItem: UIBarButtonItem!
+    
     let fortunesAlgorithmStopWatch = StopWatch(name: "FortunesAlgorithm")
     
     let randomForPoints = Random(mode: .randomlySeeded)
@@ -20,6 +23,8 @@ class ViewController: UIViewController {
     let pointsSeed = 5
     
     var sitePoints: [SitePoint<UIColor>] = []
+    
+    var options: Set<Voronoi.Option> = []
     
     var renderView: RenderView {
         return view as! RenderView
@@ -45,6 +50,8 @@ class ViewController: UIViewController {
         
         renderView.addGestureRecognizer(gestureRecognizer)
         renderView.isUserInteractionEnabled = true
+        
+        updateBarButtonItems()
 
         //endlessRepeat()
     }
@@ -63,8 +70,35 @@ class ViewController: UIViewController {
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
+    private func updateBarButtonItems() {
+        bordersBarButtonItem.title = options.contains(.makeEdgesOnClipRectBorders) ? "Borders ON" : "Borders OFF"
+        polygonsBarButtonItem.title = options.contains(.makeSitePolygonVertices) ? "Polygons ON" : "Polygons OFF"
+    }
+    
     @IBAction func didTapRefreshButton(_ sender: Any) {
         makeSites(forViewSize: renderAreaSize)
+        makeNewVoronoi(ofSize: renderAreaSize)
+    }
+    
+    @IBAction func didTapBordersBarButton(_ sender: Any) {
+        if options.contains(.makeEdgesOnClipRectBorders) {
+            options.remove(.makeEdgesOnClipRectBorders)
+        } else {
+            options.insert(.makeEdgesOnClipRectBorders)
+        }
+        
+        updateBarButtonItems()
+        makeNewVoronoi(ofSize: renderAreaSize)
+    }
+    
+    @IBAction func didTapPolygonsBarButton(_ sender: Any) {
+        if options.contains(.makeSitePolygonVertices) {
+            options.remove(.makeSitePolygonVertices)
+        } else {
+            options.insert(.makeSitePolygonVertices)
+        }
+        
+        updateBarButtonItems()
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
@@ -93,7 +127,6 @@ class ViewController: UIViewController {
         for _ in 0..<numberOfSites {
             let point = randomPointInArea(withSize: size)
             let color = randomColor()
-            //let color = UIColor.red
             sitePoints.append(SitePoint(point: point, userData: color))
         }
     }
@@ -103,7 +136,7 @@ class ViewController: UIViewController {
             let width = Double(size.width)
             let height = Double(size.height)
             let padding = 10.0
-            let result = Voronoi.runFortunesAlgorithm(sitePoints: sitePoints, clipRect: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: [.makeSitePolygonVertices, .makeEdgesOnClipRectBorders])
+            let result = Voronoi.runFortunesAlgorithm(sitePoints: sitePoints, clipRect: .minMaxXY(minX: padding, minY: padding, maxX: width - padding, maxY: height - padding), options: options)
             return result
         }) { (result, runTime) in
             fortunesAlgorithmStopWatch.printRunTime(runTime)

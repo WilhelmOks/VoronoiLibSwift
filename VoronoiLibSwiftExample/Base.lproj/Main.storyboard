@@ -38,12 +38,28 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="SXZ-eF-ehR">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Tcb-PN-MJs">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Tcb-PN-MJs">
                             <connections>
                                 <action selector="didTapRefreshButton:" destination="BYZ-38-t0r" id="Og0-gl-qmI"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" id="yO1-9I-6sL">
+                                <connections>
+                                    <action selector="didTapPolygonsBarButton:" destination="BYZ-38-t0r" id="wV2-G4-DXS"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="32D-Uv-OkV">
+                                <connections>
+                                    <action selector="didTapBordersBarButton:" destination="BYZ-38-t0r" id="zfB-3o-D9y"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bordersBarButtonItem" destination="32D-Uv-OkV" id="7FG-uV-9eH"/>
+                        <outlet property="polygonsBarButtonItem" destination="yO1-9I-6sL" id="aRu-jL-Sv9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
