@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     let randomForPoints = Random(mode: .randomlySeeded)
     let randomForColors = Random(mode: .randomlySeeded)
     
+    var touchLocation = CGPoint.zero
+    
     let pointsSeed = 5
     
     var sitePoints: [SitePoint<UIColor>] = []
@@ -38,7 +40,10 @@ class ViewController: UIViewController {
         makeSites(forViewSize: renderAreaSize)
         makeNewVoronoi(ofSize: renderAreaSize)
         
-        renderView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapRenderArea)))
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleGestureRecognizer))
+        gestureRecognizer.minimumPressDuration = 0
+        
+        renderView.addGestureRecognizer(gestureRecognizer)
         renderView.isUserInteractionEnabled = true
 
         //endlessRepeat()
@@ -63,14 +68,19 @@ class ViewController: UIViewController {
         makeNewVoronoi(ofSize: renderAreaSize)
     }
     
-    @objc private func didTapRenderArea(_ gestureRecognizer: UITapGestureRecognizer) {
-        let location = gestureRecognizer.location(ofTouch: 0, in: renderView)
-        
-        print("tap location: \(location)")
-        
-        let site = SitePoint(point: SIMD2<Double>(x: Double(location.x), y: Double(location.y)), userData: randomColor())
-        sitePoints.append(site)
-        makeNewVoronoi(ofSize: renderAreaSize)
+    @objc private func handleGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            touchLocation = gestureRecognizer.location(ofTouch: 0, in: renderView)
+            
+            let site = SitePoint(point: SIMD2<Double>(x: Double(touchLocation.x), y: Double(touchLocation.y)), userData: randomColor())
+            sitePoints.append(site)
+            makeNewVoronoi(ofSize: renderAreaSize)
+        } else if gestureRecognizer.state == .changed {
+            touchLocation = gestureRecognizer.location(ofTouch: 0, in: renderView)
+            let lastPoint = sitePoints.last!
+            sitePoints[sitePoints.count-1] = SitePoint(point: SIMD2<Double>(x: Double(touchLocation.x), y: Double(touchLocation.y)), userData: lastPoint.userData)
+            makeNewVoronoi(ofSize: renderAreaSize)
+        }
     }
     
     private func makeSites(forViewSize size: CGSize) {
