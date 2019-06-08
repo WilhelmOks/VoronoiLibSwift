@@ -118,7 +118,7 @@ class ViewController: UIViewController {
     }
     
     private func makeSites(forViewSize size: CGSize) {
-        let numberOfSites = 10
+        let numberOfSites = 30
         
         Random.setGlobalSeed(pointsSeed)
         

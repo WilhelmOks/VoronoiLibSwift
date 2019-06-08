@@ -24,7 +24,7 @@ public enum Voronoi {
         
         let fortuneSites = sites.map { $0.fortuneSite }
         
-        let edges = FortunesAlgorithm.run(sites: fortuneSites, borderInfo: borderInfo, on: double4).array
+        let edges = FortunesAlgorithm.run(sites: fortuneSites, borderInfo: borderInfo, on: double4)
         
         let borderEdges: [VEdge]
         if options.contains(.makeEdgesOnClipRectBorders) || options.contains(.makeSitePolygonVertices) {

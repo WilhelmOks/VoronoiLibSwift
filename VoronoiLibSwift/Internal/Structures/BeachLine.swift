@@ -26,7 +26,7 @@ final class BeachLine {
         
     }
     
-    func addBeachSection(siteEvent: FortuneSiteEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: LinkedList<VEdge>) {
+    func addBeachSection(siteEvent: FortuneSiteEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: inout [VEdge]) {
         let site = siteEvent.site
         let x = site.point.x
         let directrix = site.point.y
@@ -119,7 +119,7 @@ final class BeachLine {
             leftEdge.neighbor = rightEdge
         
             //put the edge in the list
-            edges.addFirst(leftEdge)
+            edges.insert(leftEdge, at: 0)
         
             //store the left edge on each arc section
             newSection.data.edge = leftEdge
@@ -145,7 +145,7 @@ final class BeachLine {
             let newEdge = VEdge(start: start, left: site, right: leftSection!.data.site)
         
             newEdge.neighbor = infEdge
-            edges.addFirst(newEdge)
+            edges.insert(newEdge, at: 0)
         
             leftSection?.data.site.addNeighbor(site: newSection.data.site, edge: newEdge)
             newSection.data.site.addNeighbor(site: leftSection!.data.site, edge: newEdge)
@@ -196,8 +196,8 @@ final class BeachLine {
             newSection.data.edge = VEdge(start: vertex, left: site, right: leftSection!.data.site)
             rightSection?.data.edge = VEdge(start: vertex, left: rightSection!.data.site, right: site)
             
-            edges.addFirst(newSection.data.edge!)
-            edges.addFirst(rightSection!.data.edge!)
+            edges.insert(newSection.data.edge!, at: 0)
+            edges.insert(rightSection!.data.edge!, at: 0)
         
             //add neighbors for delaunay
             newSection.data.site.addNeighbor(site: leftSection!.data.site, edge: newSection.data.edge!)
@@ -211,7 +211,7 @@ final class BeachLine {
         }
     }
     
-    func removeBeachSection(circle: FortuneCircleEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: LinkedList<VEdge>) {
+    func removeBeachSection(circle: FortuneCircleEvent, eventQueue: MinHeap<FortuneEvent>, deleted: HashSet<FortuneCircleEvent>, edges: inout [VEdge]) {
         let section = circle.toDelete
         let x = circle.point.x
         let y = circle.yCenter
@@ -262,7 +262,7 @@ final class BeachLine {
         //create a new edge with start point at the vertex and assign it to next
         let newEdge = VEdge(start: vertex, left: next.data.site, right: prev.data.site)
         next.data.edge = newEdge
-        edges.addFirst(newEdge)
+        edges.insert(newEdge, at: 0)
     
         //add neighbors for delaunay
         prev.data.site.addNeighbor(site: next.data.site, edge: newEdge)

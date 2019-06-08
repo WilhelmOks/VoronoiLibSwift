@@ -9,7 +9,7 @@
 import simd
 
 final class FortunesAlgorithm {
-    static func run(sites: [FortuneSite], borderInfo: BorderInfoAggregator, on clipRect: ClipRect.Double4) -> LinkedList<VEdge> {
+    static func run(sites: [FortuneSite], borderInfo: BorderInfoAggregator, on clipRect: ClipRect.Double4) -> [VEdge] {
         
         let eventQueue = MinHeap<FortuneEvent>(capacity: 5 * sites.count)
         for s in sites {
@@ -18,26 +18,26 @@ final class FortunesAlgorithm {
         
         //init tree
         let beachLine = BeachLine()
-        let edges = LinkedList<VEdge>() //TODO: try using Array as inout
+        var edges = [VEdge]()
         let deleted = HashSet<FortuneCircleEvent>()
         
         //init edge list
         while eventQueue.count != 0 {
             let fEvent = eventQueue.pop()
             if fEvent is FortuneSiteEvent {
-                beachLine.addBeachSection(siteEvent: fEvent as! FortuneSiteEvent, eventQueue: eventQueue, deleted: deleted, edges: edges)
+                beachLine.addBeachSection(siteEvent: fEvent as! FortuneSiteEvent, eventQueue: eventQueue, deleted: deleted, edges: &edges)
             } else {
                 if deleted.contains(fEvent as! FortuneCircleEvent) {
                     deleted.remove(fEvent as! FortuneCircleEvent)
                 } else {
-                    beachLine.removeBeachSection(circle: fEvent as! FortuneCircleEvent, eventQueue: eventQueue, deleted: deleted, edges: edges)
+                    beachLine.removeBeachSection(circle: fEvent as! FortuneCircleEvent, eventQueue: eventQueue, deleted: deleted, edges: &edges)
                 }
             }
         }
         
         var edgesToRemove: [VEdge] = []
         //clip edges
-        for edge in edges.array {
+        for edge in edges {
             let valid: Bool = clipEdge(edge: edge, clipRect: clipRect)
             if valid {
                 if borderInfo.enabled {
@@ -56,8 +56,22 @@ final class FortunesAlgorithm {
                 edge.right.removeCellEdge(edge)
             }
         }
-        edges.removeAll(edgesToRemove) //TODO: test if .filter is faster
         
+        let n = edges.count
+        for i in 0..<n {
+            let ii = n - 1 - i
+            let edge = edges[ii]
+            for r in 0..<edgesToRemove.count {
+                let rr = edgesToRemove.count - 1 - r
+                let edgeToRemove = edgesToRemove[rr]
+                if edge === edgeToRemove {
+                    edgesToRemove.remove(at: rr)
+                    edges.remove(at: ii)
+                    break
+                }
+            }
+        }
+                
         return edges
     }
     
