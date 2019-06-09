@@ -43,12 +43,12 @@ The edges can be rendered like this:
 When you need the exact shape of the sites, for example to paint each site with different colors, you can enable the generation of polygon vertices for each site.
 
 For example, specify `UIColor` for the `UserData` generic parameter of `SitePoint`.
-Give each `SitePoint` a value for the `userData` parameter (for example `UIColor.red`).
+Give each `SitePoint` a value for the `userData` parameter (for example `UIColor.blue`).
 Pass a set containing `Voronoi.Option.makeSitePolygonVertices` into the `options` parameter of `Voronoi.runFortunesAlgorithm`.
 
 ```swift
 let sitePoints: [SitePoint<UIColor>] = [
-  SitePoint(point: SIMD2<Double>(x: 20, y: 30), userData: .red)
+  SitePoint(point: SIMD2<Double>(x: 20, y: 30), userData: .blue)
   //other site points...
 ]
 
@@ -68,3 +68,7 @@ Use the `userData` property to get extra infos for the sites like the color to f
 ![screenshot](bn_py.png)
 
 Computing the polygons takes more time than just the edes.
+
+The option `Voronoi.Option.makeEdgesOnClipRectBorders` will also generate edges on the border of the graph (the `clipRect` border):
+
+![screenshot](by_py.png)
