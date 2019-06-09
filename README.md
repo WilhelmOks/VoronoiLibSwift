@@ -4,8 +4,6 @@ Swift implementation of Fortunes Algorithm.
 This is a port of [Zalgo2462/VoronoiLib](https://github.com/Zalgo2462/VoronoiLib) from C# to Swift.
 In addition to the original C# library, this Swift library optionally generates polygons for the sites.
 
-![screenshot](Simulator_Screen_Shot.png)
-
 ## Xcode projects
 * *VoronoiLibSwift.xcodeproj* builds an iOS framework to be used as a library.
 * *VoronoiLibSwiftExample.xcodeproj* includes the VoronoiLibSwift framework and contains an example iOS App which renders a voronoi graph.
