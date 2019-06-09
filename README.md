@@ -1,3 +1,7 @@
+<p>
+    <img src="https://img.shields.io/badge/Swift-5-orange.svg" />
+</p>
+
 # VoronoiLibSwift
 Swift implementation of Fortunes Algorithm.
 
