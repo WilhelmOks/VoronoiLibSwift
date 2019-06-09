@@ -29,7 +29,9 @@ let result = Voronoi.runFortunesAlgorithm(sitePoints: sitePoints, clipRect: clip
 ```
 
 The result will be a tuple, containing the sites and the edges for the voronoi graph:
+
 `(edges: [Edge<Void>], sites: [Site<Void>])`
 
 The edges can be rendered like this:
+
 ![screenshot](bn_pn.png)
