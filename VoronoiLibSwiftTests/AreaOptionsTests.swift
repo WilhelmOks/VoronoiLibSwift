@@ -19,11 +19,11 @@ class AreaOptionsTests: XCTestCase {
         .init(0.79, 0.83),
     ]
     
-    var sites: [Site<Void>] {
-        return points.map { Site(point: $0) }
+    var sites: [SitePoint<Void>] {
+        return points.map { SitePoint(point: $0) }
     }
 
-    func testMinMaxXY() {        
+    func testMinMaxXY() {
         let edgesLimits = limitsForEdges(withArea: .minMaxXY(minX: -1, minY: -2, maxX: 1, maxY: 2))
 
         XCTAssertEqual(edgesLimits.minX, -1, accuracy: accuracy)
@@ -68,12 +68,12 @@ class AreaOptionsTests: XCTestCase {
         XCTAssertEqual(edgesLimits.maxY, 2, accuracy: accuracy)
     }
     
-    private func limitsForEdges(withArea area: FortunesAlgorithm<Void>.Rect) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {
-        let edges = FortunesAlgorithm.run(sites: sites, area: area, options: [])
-        return limits(forEdges: edges)
+    private func limitsForEdges(withArea area: ClipRect) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+        let result = Voronoi.runFortunesAlgorithm(sitePoints: sites, clipRect: area, options: [])
+        return limits(forEdges: result.edges)
     }
     
-    private func limits(forEdges edges: [Edge]) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {
+    private func limits(forEdges edges: [Edge<Void>]) -> (minX: Double, minY: Double, maxX: Double, maxY: Double) {
         var minX: Double = .infinity
         var minY: Double = .infinity
         var maxX: Double = -.infinity
