@@ -7,7 +7,7 @@
 //
 
 enum Approx {
-    private static let epsilon = 4.94065645841247E-324 * 1E100
+    private static let epsilon = 4.94065645841247E-224
     
     @inlinable static func approxZero(_ value: Double) -> Bool {
         return abs(value) <= epsilon
