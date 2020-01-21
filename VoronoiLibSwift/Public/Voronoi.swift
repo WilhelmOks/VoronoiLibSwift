@@ -12,7 +12,7 @@ public enum Voronoi {
         case makeSitePolygonVertices
     }
     
-    public static func runFortunesAlgorithm<UserData>(sitePoints: [SitePoint<UserData>], clipRect: ClipRect, options: Set<Option>) -> (edges: [Edge<UserData>], sites: [Site<UserData>]) {
+    public static func runFortunesAlgorithm<UserData>(sitePoints: [SitePoint<UserData>], clipRect: ClipRect, options: Set<Option>, randomlyOffsetSiteLocationsBy: Double? = nil) -> (edges: [Edge<UserData>], sites: [Site<UserData>]) {
         let borderInfo = BorderInfoAggregator()
         if options.contains(.makeEdgesOnClipRectBorders) || options.contains(.makeSitePolygonVertices) {
             borderInfo.enabled = true
@@ -22,7 +22,7 @@ public enum Voronoi {
         
         let sites = Set(sitePoints).map { Site(point: $0.point, userData: $0.userData) } //the Set makes the points approximately unique
         
-        let fortuneSites = sites.map { $0.fortuneSite }
+        let fortuneSites = sites.map { $0.fortuneSite.randomlyOffsetLocation(magnitude: randomlyOffsetSiteLocationsBy ?? 0) }
         
         let edges = FortunesAlgorithm.run(sites: fortuneSites, borderInfo: borderInfo, on: double4)
         

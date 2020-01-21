@@ -7,7 +7,7 @@
 //
 
 class FortuneSite {
-    let point: VPoint
+    private(set) var point: VPoint
         
     private(set) var neighbors: [FortuneSite] = []
     private(set) var cellEdges: [VEdge] = []
@@ -25,6 +25,15 @@ class FortuneSite {
     
     init(_ point: VPoint) {
         self.point = point
+    }
+    
+    func randomlyOffsetLocation(magnitude: Double) -> Self {
+        if (magnitude != 0) {
+            let randomOffsetRange = (-abs(magnitude)...abs(magnitude))
+            point.x += .random(in: randomOffsetRange)
+            point.y += .random(in: randomOffsetRange)
+        }
+        return self
     }
     
     func addNeighbor(site: FortuneSite, edge: VEdge) {
